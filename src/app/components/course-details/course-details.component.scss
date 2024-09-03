@@ -1,0 +1,32 @@
+.highlighted {
+    border: 2px solid #ff9800; // צבע בולט
+    padding: 10px;
+    background-color: #fff3e0; // צבע רקע בולט
+  }
+  .square-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 2px solid #ccc; /* גבול סביב התמונה */
+    display: block;
+    margin: 0 auto; /* למרכז את התמונה בתוך הקונטיינר שלה */
+  }
+  .category-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .category-icon {
+    width: 50px;  // קובע את רוחב התמונה
+    height: 50px; // קובע את גובה התמונה
+    object-fit: cover; // מבטיח שהתמונה תתפרס נכון ללא עיוותים
+    border-radius: 50%; // הופך את התמונה לעיגול
+    border: 2px solid #ddd; // הוספת גבול דק מסביב לתמונה
+    margin-right: 10px; // רווח בין התמונה לטקסט
+  }
+  .learning-mode {
+    font-size: 1.5em;
+  }
+  

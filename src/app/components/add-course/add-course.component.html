@@ -1,0 +1,140 @@
+<form [formGroup]="courseForm" (ngSubmit)="onSubmit()" class="add-course-container">
+<h6>Add Course</h6>
+  <div class="form-row">
+    <mat-form-field appearance="fill">
+      <mat-label>Code</mat-label>
+      <input matInput formControlName="code">
+    </mat-form-field>
+    
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+  </div>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Category</mat-label>
+    <mat-select formControlName="category">
+      <mat-option *ngFor="let category of categories" [value]="category.code">
+        {{ category.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  
+  <div class="form-row">
+    <mat-form-field appearance="fill">
+      <mat-label>Lecturer Code</mat-label>
+      <mat-select formControlName="lecturerCode" (selectionChange)="onLecturerCodeChange($event)">
+        <mat-option *ngFor="let code of lecturerCodes" [value]="code">
+          {{ code }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    
+    <mat-form-field appearance="fill">
+      <mat-label>Lecturer Name</mat-label>
+      <input matInput formControlName="lecturerName" readonly>
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <mat-form-field appearance="fill">
+      <mat-label>Number of Lessons</mat-label>
+      <input matInput formControlName="numberOfLessons" type="number">
+    </mat-form-field>
+    
+    <mat-form-field appearance="fill">
+      <mat-label>Start Date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="startDate" [min]="minDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div formArrayName="syllabus">
+    <div *ngFor="let control of syllabus.controls; let i = index">
+      <mat-form-field appearance="fill">
+        <mat-label>Syllabus Item</mat-label>
+        <input matInput [formControlName]="i" placeholder="Enter syllabus item">
+      </mat-form-field>
+      <button mat-raised-button color="warn" type="button" (click)="removeSyllabusField(i)">Remove</button>
+    </div>
+    <button mat-raised-button color="primary" type="button" (click)="addSyllabusField()">Add Syllabus Item</button>
+  </div>
+<br/>
+  <mat-form-field appearance="fill">
+    <mat-label>Learning Mode</mat-label>
+    <mat-select formControlName="learningMode">
+      <mat-option value="InPerson">In-Person</mat-option>
+      <mat-option value="Zoom">Zoom</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Image URL</mat-label>
+    <input matInput formControlName="image">
+  </mat-form-field>
+
+  <div>
+    <button mat-raised-button color="primary" type="submit">Save Course</button>
+  </div>
+
+</form>
+
+<!-- <p>add-course works!</p>
+<form [formGroup]="courseForm" (ngSubmit)="onSubmit()">
+  
+    <label for="code">Code:</label>
+    <input id="code" formControlName="code">
+    <br/>
+
+    <label for="name">Name:</label>
+    <input id="name" formControlName="name">
+  <br/>
+    <label for="category">Category:</label>
+    <select id="category" formControlName="category">
+      <option *ngFor="let category of categories" [value]="category.code">{{ category.name }}</option>
+    </select>
+    <br/>
+    
+    <label for="lecturerCode">Lecturer Code:</label>
+<select id="lecturerCode" formControlName="lecturerCode" (change)="onLecturerCodeChange($event)">
+  <option *ngFor="let code of lecturerCodes" [value]="code">{{ code }}</option>
+</select>
+
+<label for="lecturerName">Lecturer Name:</label>
+<input id="lecturerName" formControlName="lecturerName" readonly>
+
+
+    <br/>
+    <label for="numberOfLessons">Number of Lessons:</label>
+    <input id="numberOfLessons" formControlName="numberOfLessons">
+    <br/>
+
+    <label for="startDate">Start Date:</label>
+    <input id="startDate" type="date" formControlName="startDate" [min]="minDate">
+    <br/>
+
+    <label for="syllabus">Syllabus:</label>
+    <div formArrayName="syllabus">
+      <div *ngFor="let control of syllabus.controls; let i = index">
+        <input [formControlName]="i" placeholder="Enter syllabus item">
+        <button type="button" (click)="removeSyllabusField(i)">Remove</button>
+      </div>
+      <button type="button" (click)="addSyllabusField()">Add Syllabus Item</button>
+    </div>
+    <br/>
+    
+    <label for="learningMode">Learning Mode:</label>
+    <select id="learningMode" formControlName="learningMode">
+      <option value="InPerson">InPerson</option>
+      <option value="Zoom">Zoom</option>
+    </select>
+    <br/>
+
+    <label for="image">Image URL:</label>
+    <input id="image" formControlName="image">
+    <br/>
+
+    <button type="submit">Save Course</button>
+  </form> -->

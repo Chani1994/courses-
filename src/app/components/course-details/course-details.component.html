@@ -1,0 +1,77 @@
+<!-- <p>course-details works!</p>
+<div [ngClass]="{'highlighted': isHighlighted}">
+  <h1>{{ course.courseName }}</h1>
+  <div>
+    <img [src]="course.imagePath" alt="{{ course.courseName }}" class="square-image"/>
+  </div>
+  <div *ngIf="course && course.category" class="category-item">
+    <span>{{ course.category.name }}</span>
+    <img *ngIf="course.category.iconPath" 
+         [src]="course.category.iconPath" 
+         alt="{{ course.category.name }}" class="category-icon"/>
+  </div>
+  <div>
+    <p><strong>שם המרצה:</strong> {{ lecturerName }}</p>
+  </div>
+  <div>
+    <p><strong>תאריך התחלה:</strong> {{ course.startDate | date }}</p>
+  </div>
+  <div>
+    <p><strong>כמות השיעורים:</strong> {{ course.numberOfLessons }}</p>
+  </div>
+  <div>
+    <strong>אופן הלמידה:</strong> {{ getLearningMethodEnum(course.learningMethod) | learningModeIcon }}
+  </div>
+  <div>
+    <p><strong>סילבוס:</strong></p>
+    <ul>
+      <li *ngFor="let topic of course.syllabus">{{ topic }}</li>
+    </ul>
+  </div>
+  <button *ngIf="isLecturer" (click)="editCourse()">Update Course Details</button>
+</div>
+ -->
+ <p>course-details works!</p>
+ <div [ngClass]="{'highlighted': isHighlighted}">
+   <h1>{{ course.courseName }}</h1>
+   
+   <div>
+     <img [src]="course.imagePath" alt="{{ course.courseName }}" class="square-image"/>
+   </div>
+ 
+   <!-- הצג קטגוריה ואייקון רק אם קיימים -->
+   <div *ngIf="course?.category" class="category-item">
+     <span *ngIf="course.category.name">{{ course.category.name }}</span>
+     <img *ngIf="course.category.iconPath" 
+          [src]="course.category.iconPath" 
+          alt="{{ course.category.name }}" class="category-icon"/>
+   </div>
+ 
+   <div>
+     <p><strong>שם המרצה:</strong> {{ lecturerName }}</p>
+   </div>
+ 
+   <div>
+     <p><strong>תאריך התחלה:</strong> {{ course.startDate | date }}</p>
+   </div>
+ 
+   <div>
+     <p><strong>כמות השיעורים:</strong> {{ course.numberOfLessons }}</p>
+   </div>
+ 
+   <!-- השתמש ב-pipe או בפונקציה כדי להמיר את אופן הלמידה למשהו קריא -->
+   <div>
+     <strong>אופן הלמידה:</strong> {{ getLearningMethodEnum(course.learningMethod) | learningModeIcon }}
+   </div>
+ 
+   <div>
+     <p><strong>סילבוס:</strong></p>
+     <ul>
+       <li *ngFor="let topic of course.syllabus">{{ topic }}</li>
+     </ul>
+   </div>
+ 
+   <!-- כפתור עריכה מוצג רק אם המשתמש הוא המרצה -->
+   <button *ngIf="isLecturer" (click)="editCourse()">Update Course Details</button>
+ </div>
+ 

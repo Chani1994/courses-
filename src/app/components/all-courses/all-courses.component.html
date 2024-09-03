@@ -1,0 +1,54 @@
+<p>all-courses works!</p>
+<div *ngIf="!isAuthenticated" class="error-message">
+  <p>אופסססססס, אינך מחובר...</p>
+  <button (click)="goToLogin()">להתחברות לחץ כאן</button> <!-- כפתור להתחברות -->
+</div>
+
+
+<div *ngIf="isAuthenticated">
+  <input type="text" (input)="onFilterChange('name', $event)" placeholder="חפש לפי שם" />
+  <br />
+  <select (change)="onFilterChange('category', $event)">
+    <option value="">חפש לפי קטגוריה</option>
+    <option *ngFor="let category of categories" [value]="category.code">{{ category.name }}</option>
+  </select>
+  <br />
+  <select (change)="onFilterChange('learningMode', $event)">
+    <option value="">חפש לפי אופן הלמידה</option>
+    <option *ngFor="let mode of learningModes" [value]="mode">{{ mode }}</option>
+  </select>
+  <br />
+
+  <div>
+    <app-course-details *ngFor="let course of filteredCourses" [course]="course"></app-course-details>
+  </div>
+</div>
+
+<!-- <div *ngIf="isAuthenticated; else notAuthenticated"> -->
+  <!-- שדה חיפוש לפי שם -->
+  <!-- <input type="text" (input)="onFilterChange('name', $event)" placeholder="חפש לפי שם">
+  <br> -->
+  
+  <!-- תיבת בחירה לחיפוש לפי קטגוריה -->
+  <!-- <select (change)="onFilterChange('category', $event)">
+    <option value="">חפש לפי קטגוריה</option>
+    <option *ngFor="let category of categories" [value]="category.code">{{ category.name }}</option>
+  </select>
+  <br> -->
+
+  <!-- תיבת בחירה לחיפוש לפי אופן הלמידה -->
+  <!-- <select (change)="onFilterChange('learningMode', $event)">
+    <option value="">חפש לפי אופן הלמידה</option>
+    <option *ngFor="let mode of learningModes" [value]="mode">{{ mode }}</option>
+  </select>
+  
+  <div> -->
+    <!-- הצגת פרטי הקורסים -->
+    <!-- <app-course-details *ngFor="let course of filteredCourses" [course]="course"></app-course-details>
+  </div>
+</div> -->
+
+<!-- תבנית חלופית כאשר המשתמש אינו מחובר -->
+<!-- <ng-template #notAuthenticated>
+  <p>אופסססססס, אינך מחובר...</p>
+</ng-template> -->

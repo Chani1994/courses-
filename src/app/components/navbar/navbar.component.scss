@@ -1,0 +1,40 @@
+/* navbar.component.scss */
+.navbar {
+  background-color: #e91e63; /* Rose color */
+  padding: 10px;
+}
+
+.navbar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.navbar li {
+  display: inline;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.navbar a:hover {
+  background-color: #c2185b; /* Darker rose color for hover effect */
+}
+
+/* Optional: styling for the logout link */
+.navbar .logout {
+  background-color: #d32f2f; /* Red color */
+  border-radius: 4px;
+}
+
+.navbar .logout:hover {
+  background-color: #b71c1c; /* Darker red color for hover effect */
+}

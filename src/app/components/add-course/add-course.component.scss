@@ -1,0 +1,31 @@
+.add-course-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    text-align: center;
+  }
+  
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; /* רווח בין השדות */
+    justify-content: space-between; /* רווח בין השדות */
+  }
+  
+  .form-row-full {
+    margin-bottom: 16px;
+  }
+  
+  .mat-form-field {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  .error {
+    color: red;
+    margin-top: 10px;
+  }
+  
