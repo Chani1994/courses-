@@ -1,8 +1,9 @@
 import { Category } from "./category.model";
 
 export enum LearningMethod {
- 'In-Person'  = 'In-Person',
-  'Zoom' = 'Zoom'
+  'Zoom' = 'Zoom',
+  'In-Person'  = 'In-Person'
+
   }
   
   export class Course {

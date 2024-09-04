@@ -1,0 +1,30 @@
+/* עיצוב עבור כותרת האתר */
+.site-title {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* מרכז את התוכן אופקית */
+    font-size: 35px; /* ניתן להתאים לפי הצורך */
+    background-color: #e91e63; /* צבע הרקע של הכותרת */
+    color: white;
+    font-family: 'Arial', sans-serif; /* גופן, ניתן לשנות לפי הצורך */
+    margin: 0; /* מבטל רווחים סביב הכותרת */
+    padding: 10px; /* רווח פנימי סביב הכותרת, אם נדרש */
+  }
+  
+  /* עיצוב עבור האיקון */
+  .site-icon {
+    margin-right: 8px; /* רווח בין האיקון לשם */
+    font-size: 32px; /* גודל האיקון */
+    color: white; /* צבע האיקון שיתאם לצבע הטקסט */
+  }
+  
+  /* עיצוב עבור שם האתר */
+  .site-name {
+    font-weight: bold; /* עיצוב טקסט בולט */
+  }
+  
+  /* עיצוב עבור ה-navbar */
+  app-navbar {
+    margin: 0; /* מבטל רווחים סביב ה-navbar */
+  }
+  

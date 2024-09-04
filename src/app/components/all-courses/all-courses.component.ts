@@ -1,4 +1,3 @@
-
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Course, LearningMethod } from '../../models/course.model';
 import { CourseService } from '../../services/course.service';
@@ -10,11 +9,21 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { Subscription } from 'rxjs';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectChange } from '@angular/material/select'; // Import if available
 
 @Component({
   selector: 'app-all-courses',
   standalone: true,
-  imports: [CourseDetailsComponent, CommonModule, HttpClientModule],
+  imports: [CourseDetailsComponent, CommonModule, HttpClientModule, MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatGridListModule,
+    MatButtonModule],
   templateUrl: './all-courses.component.html',
   styleUrls: ['./all-courses.component.scss']
 })
@@ -48,7 +57,6 @@ export class AllCoursesComponent implements OnInit, OnDestroy {
       }
     });
 
-    // בדיקה ראשונית של הסטטוס
     if (this.authService.isAuthenticated()) {
       this.isAuthenticated = true;
       this.loadCourses();
@@ -80,23 +88,18 @@ export class AllCoursesComponent implements OnInit, OnDestroy {
     );
   }
 
-  onFilterChange(filterName: keyof typeof this.filters, event: Event) {
-    const target = event.target as HTMLInputElement;
-
-    if (filterName === 'learningMode') {
-      const value = target.value as keyof typeof LearningMethod;
-      if (value in LearningMethod) {
-        this.filters[filterName] = LearningMethod[value as keyof typeof LearningMethod];
-      } else {
-        this.filters[filterName] = '';
-      }
+  onFilterChange(filterName: keyof typeof this.filters, event: Event | MatSelectChange) {
+    if (filterName === 'learningMode' || filterName === 'category') {
+      const selectEvent = event as MatSelectChange;
+      this.filters[filterName] = selectEvent.value;
     } else {
+      const inputEvent = event as InputEvent;
+      const target = inputEvent.target as HTMLInputElement;
       this.filters[filterName] = target.value;
     }
-
+    
     this.applyFilters();
   }
-
   applyFilters() {
     this.filteredCourses = this.courses.filter((course) => {
       return (
@@ -111,4 +114,5 @@ export class AllCoursesComponent implements OnInit, OnDestroy {
     this.router.navigate(['/login']);
   }
 }
+
 

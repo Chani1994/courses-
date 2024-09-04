@@ -1,8 +1,48 @@
-<p>all-courses works!</p>
+
 <div *ngIf="!isAuthenticated" class="error-message">
   <p>אופסססססס, אינך מחובר...</p>
-  <button (click)="goToLogin()">להתחברות לחץ כאן</button> <!-- כפתור להתחברות -->
+  <button mat-raised-button color="primary" (click)="goToLogin()">להתחברות לחץ כאן</button>
 </div>
+
+<div *ngIf="isAuthenticated">
+<h2 class="style-title">מגוון הקורסים</h2>
+  <div class="filter-container">
+    <div class="filter-content">
+      <mat-form-field appearance="fill">
+        <mat-label>חפש לפי שם</mat-label>
+        <input matInput (input)="onFilterChange('name', $event)" placeholder="חפש לפי שם" />
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>חפש לפי אופן הלמידה</mat-label>
+        <mat-select (selectionChange)="onFilterChange('learningMode', $event)">
+          <mat-option value="">חפש לפי אופן הלמידה</mat-option>
+          <mat-option *ngFor="let mode of learningModes" [value]="mode">{{ mode }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>חפש לפי קטגוריה</mat-label>
+        <mat-select (selectionChange)="onFilterChange('category', $event)">
+          <mat-option value="">חפש לפי קטגוריה</mat-option>
+          <mat-option *ngFor="let category of categories" [value]="category.code">{{ category.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  
+  <!-- Replacing mat-grid-list with a simple div container -->
+  <div class="course-list">
+    <div *ngFor="let course of filteredCourses" class="course-tile">
+      <app-course-details [course]="course"></app-course-details>
+    </div>
+  </div>
+</div>
+
+
+<!-- <p>all-courses works!</p>
+<div *ngIf="!isAuthenticated" class="error-message">
+  <p>אופסססססס, אינך מחובר...</p>
+  <button (click)="goToLogin()">להתחברות לחץ כאן</button> //כפתור להתחברות -->
+<!-- </div>
 
 
 <div *ngIf="isAuthenticated">
@@ -22,7 +62,7 @@
   <div>
     <app-course-details *ngFor="let course of filteredCourses" [course]="course"></app-course-details>
   </div>
-</div>
+</div> --> 
 
 <!-- <div *ngIf="isAuthenticated; else notAuthenticated"> -->
   <!-- שדה חיפוש לפי שם -->

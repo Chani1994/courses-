@@ -2,19 +2,25 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Course, LearningMethod } from '../../models/course.model';
 import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
-import Swal from 'sweetalert2';
 import { CourseService } from '../../services/course.service';
-import { User } from '../../models/user.model'; // ודא שיש לך מודל User
-// import { HttpErrorResponse } from '@angular/common/http';
+import { User } from '../../models/user.model'; 
 import { LecturerService } from '../../services/lecturer.service';
 import { Lecturer } from '../../models/lecturer.model';
 import { Router } from '@angular/router';
 import { LearningModeIconPipe } from '../../pipes/learning-mode-icon.pipe';
-
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
 @Component({
   selector: 'app-course-details',
   standalone: true,
-  imports: [CommonModule,LearningModeIconPipe],
+  imports: [ CommonModule,
+    MatCardModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatInputModule,
+    LearningModeIconPipe ],// ייבוא הפייפ המותאם אישית לשימוש בקומפוננטה],
   templateUrl: './course-details.component.html',
   styleUrls: ['./course-details.component.scss']
 })
@@ -77,9 +83,7 @@ checkIfLecturer(): void {
 
   if (!currentUser) {
     console.log('No user token found in sessionStorage. Redirecting to login.');
-    // אפשר להוסיף טיפול במצבים כאלה, לדוגמה להפנות את המשתמש למסך התחברות או להציג הודעה מתאימה
-    // לדוגמה:
-    // this.router.navigate(['/login']);
+   
     return;
   }
 

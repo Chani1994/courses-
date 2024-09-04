@@ -29,57 +29,7 @@ export class LoginComponent {
     private userService: UserService,
     private router: Router
   ) {}
-  // login(): void {
-  //   this.errorMessage = ''; // ניקוי הודעת השגיאה בתחילת הפעולה
-  
-  //   this.authService.login({ username: this.username, password: this.password }).subscribe(
-  //     (response: any) => {
-  //       if (response && response.token) {
-  //         // שמור את ה-JWT ב-sessionStorage
-  //         sessionStorage.setItem('jwtToken', response.token);
-  
-  //         // טען מחדש את ה-JWT מיד לאחר השמירה
-  //         this.authService.loadJwt(); // פונקציה זו תוודא שה-JWT נטען כראוי
-  
-  //         // המשך עם קבלת פרטי המשתמש והניווט
-  //         this.userService.getUserByUsername(this.username).subscribe(
-  //           (user: User | null) => {
-  //             if (user) {
-  //               this.userService.saveCurrentUser(user);
-  //               Swal.fire({
-  //                 icon: 'success',
-  //                 title: 'התחברת בהצלחה!',
-  //                 showConfirmButton: true,
-  //               }).then(() => {
-  //                 this.router.navigate(['/all-courses']);
-  //               });
-  //             } else {
-  //               this.errorMessage = 'אירעה שגיאה במהלך קבלת פרטי המשתמש.';
-  //               Swal.fire('שגיאה', this.errorMessage, 'error');
-  //             }
-  //           },
-  //           (error) => {
-  //             console.error('Error fetching user details:', error);
-  //             this.errorMessage = 'אירעה שגיאה במהלך קבלת פרטי המשתמש.';
-  //             Swal.fire('שגיאה', this.errorMessage, 'error');
-  //           }
-  //         );
-  //       } else {
-  //         this.errorMessage = 'אירעה שגיאה במהלך התחברות.';
-  //         Swal.fire('שגיאה', this.errorMessage, 'error');
-  //       }
-  //     },
-  //     (error) => {
-  //       if (error.status === 404 && error.error.message === 'User not found') {
-  //         this.router.navigate(['/register']); // הפנייה לדף ההרשמה
-  //       } else {
-  //         // טיפול בשגיאות אחרות
-  //         this.errorMessage = 'אירעה שגיאה במהלך התחברות.';
-  //         Swal.fire('שגיאה', this.errorMessage, 'error');
-  //       }
-  //     }
-  //   );
-  // }
+
   login(): void {
     console.log('מנסים להתחבר...');
 
@@ -143,60 +93,6 @@ handleUserNotFound(error?: any): void {
     this.router.navigate(['/register']);
 }
 
-// login(): void {
-//   this.errorMessage = ''; // ניקוי הודעת השגיאה בתחילת הפעולה
-
-//   this.authService.login({ username: this.username, password: this.password }).subscribe(
-//     (response: any) => {
-//       if (response && response.token) {
-//         // שמור את ה-JWT ב-sessionStorage
-//         sessionStorage.setItem('jwtToken', response.token);
-
-//         // טען מחדש את ה-JWT מיד לאחר השמירה
-//         this.authService.loadJwt(); // פונקציה זו תוודא שה-JWT נטען כראוי
-
-//         // המשך עם קבלת פרטי המשתמש והניווט
-//         this.userService.getUserByUsername(this.username).subscribe(
-//           (user: User | null) => {
-//             if (user) {
-//               this.userService.saveCurrentUser(user);
-//               Swal.fire({
-//                 icon: 'success',
-//                 title: 'התחברת בהצלחה!',
-//                 showConfirmButton: true,
-//               }).then(() => {
-//                 this.router.navigate(['/all-courses']);
-//               });
-//             } else {
-//               this.errorMessage = 'אירעה שגיאה במהלך קבלת פרטי המשתמש.';
-//               Swal.fire('שגיאה', this.errorMessage, 'error');
-//             }
-//           },
-//           (error) => {
-//             console.error('Error fetching user details:', error);
-//             this.errorMessage = 'אירעה שגיאה במהלך קבלת פרטי המשתמש.';
-//             Swal.fire('שגיאה', this.errorMessage, 'error');
-//           }
-//         );
-//       } else {
-//         this.errorMessage = 'אירעה שגיאה במהלך התחברות.';
-//         Swal.fire('שגיאה', this.errorMessage, 'error');
-//       }
-//     },
-//     (error) => {
-//       if (error.status === 401) {
-//         this.errorMessage = 'שם המשתמש או הסיסמה שגויים. נסה שנית.';
-//         Swal.fire('שגיאה', this.errorMessage, 'error');
-//       } else if (error.status === 404) {
-//         this.router.navigate(['/register'], { queryParams: { username: this.username } });
-//       } else {
-//         this.errorMessage = 'אירעה שגיאה במהלך התחברות. נסה שנית.';
-//         Swal.fire('שגיאה', this.errorMessage, 'error');
-//       }
-//       console.error('Login error:', error);
-//     }
-//   );
-// }
 
   registerLecturer(): void {
     this.router.navigate(['/register'], { queryParams: { courseName: 'שם הקורס', isLecturer: true } });

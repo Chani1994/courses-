@@ -1,32 +1,66 @@
-.highlighted {
-    border: 2px solid #ff9800; // צבע בולט
-    padding: 10px;
-    background-color: #fff3e0; // צבע רקע בולט
-  }
-  .square-image {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 5px;
-    border: 2px solid #ccc; /* גבול סביב התמונה */
-    display: block;
-    margin: 0 auto; /* למרכז את התמונה בתוך הקונטיינר שלה */
-  }
-  .category-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
+.course-card {
+  display: flex;
+  align-items: flex-start;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.course-image-container {
+  flex: 0 0 150px;
+  margin-right: 16px;
+}
+
+.course-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.course-details-container {
+  flex: 1;
+}
+
+.course-category {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.category-icon {
+  width: 60px;
+  height: 60px;
+  margin-right: 8px;
+  border-radius: 50%;
+}
+
+.category-name {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.course-details {
+  margin-top: 16px;
+}
+
+.course-details h2 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 1.5em;
+}
+
+.course-details p {
+  margin: 4px 0;
+}
+
+.course-details ul {
+  padding-left: 20px;
+  margin: 8px 0;
+}
+.highlighted-card {
+  border: 2px solid #e91e63;
+  background-color: #fbeef4;
   
-  .category-icon {
-    width: 50px;  // קובע את רוחב התמונה
-    height: 50px; // קובע את גובה התמונה
-    object-fit: cover; // מבטיח שהתמונה תתפרס נכון ללא עיוותים
-    border-radius: 50%; // הופך את התמונה לעיגול
-    border: 2px solid #ddd; // הוספת גבול דק מסביב לתמונה
-    margin-right: 10px; // רווח בין התמונה לטקסט
-  }
-  .learning-mode {
-    font-size: 1.5em;
-  }
-  
+}

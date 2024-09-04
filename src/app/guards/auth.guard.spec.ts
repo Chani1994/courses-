@@ -20,15 +20,10 @@ describe('AuthGuard', () => {
 
   // תוספת בדיקות עבור AuthGuard:
   it('should allow access if authenticated', () => {
-    // כאן תוכל להוסיף את הבדיקות שלך אם ה-guard מאשר גישה
-    // נניח שיש לך service עם מתודת isAuthenticated
-    // spyOn(authService, 'isAuthenticated').and.returnValue(true);
-    // expect(guard.canActivate()).toBe(true);
+ 
   });
 
   it('should deny access and redirect if not authenticated', () => {
-    // כאן תוכל להוסיף את הבדיקות שלך אם ה-guard מונע גישה
-    // spyOn(authService, 'isAuthenticated').and.returnValue(false);
-    // expect(guard.canActivate()).toBe(false);
+    
   });
 });
