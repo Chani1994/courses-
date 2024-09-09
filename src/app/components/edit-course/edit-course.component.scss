@@ -35,3 +35,57 @@
   margin-top: 10px;
 }
 
+/* עיצוב רספונסיבי למסכים קטנים */
+@media (max-width: 600px) {
+  .add-course-container, .edit-container {
+    padding: 10px; /* התאמת רווח פנימי למסכים קטנים */
+    max-width: 100%; /* גורם לטופס לתפוס את כל רוחב המסך */
+  }
+
+  .form-row, .lecturer-row, .learning-mode-row {
+    flex-direction: column; /* השדות יסודרו אחד מתחת לשני */
+    align-items: stretch; /* כל שדה יתפוס את כל הרוחב */
+  }
+
+  .mat-form-field {
+    width: 100%; /* השדה יתפוס את כל הרוחב הזמין */
+  }
+}
+
+// .add-course-container, .edit-container {
+//   max-width: 600px;
+//   margin: 0 auto;
+//   padding: 20px;
+//   border: 1px solid #ddd;
+//   border-radius: 8px;
+//   background-color: #f9f9f9;
+//   text-align: center;
+// }
+
+// .form-row {
+//   display: flex;
+//   flex-wrap: wrap;
+//   gap: 16px; /* רווח בין השדות */
+//   justify-content: space-between; /* רווח בין השדות */
+// }
+
+// .lecturer-row,
+// .learning-mode-row {
+//   display: flex;
+//   justify-content: center; /* מרכז את השדות אופקית */
+//   gap: 16px; /* רווח בין השדות */
+//   flex-wrap: wrap; /* יאפשר לשדות להתפרס לשורות נוספות אם יש צורך */
+//   margin-bottom: 16px; /* רווח תחתון בין שורות */
+// }
+
+// .mat-form-field {
+//   width: 100%;
+//   margin-bottom: 16px;
+//   width: auto; /* מותאם לפי גודל השדה */
+// }
+
+// .error {
+//   color: red;
+//   margin-top: 10px;
+// }
+

@@ -1,4 +1,94 @@
 <div class="register-container">
+  <h2 class="style-title">Register</h2>
+  <form #form="ngForm" (ngSubmit)="register(form)" novalidate>
+    <mat-form-field appearance="fill">
+      <mat-label>Code:</mat-label>
+      <input matInput [(ngModel)]="userCode" name="userCode" readonly />
+    </mat-form-field>
+    <br/>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Name :</mat-label>
+      <input matInput id="username" [(ngModel)]="username" name="username" required />
+    </mat-form-field>
+    <br/>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Password:</mat-label>
+      <input matInput id="password" [(ngModel)]="password" name="password" type="password" required />
+    </mat-form-field>
+    <br/>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email:</mat-label>
+      <input matInput id="email" [(ngModel)]="email" name="email" type="email" required email #emailModel="ngModel" />
+      <mat-error *ngIf="emailModel.invalid && emailModel.touched">
+        <span *ngIf="emailModel.errors?.['required']">This field is required</span>
+        <span *ngIf="emailModel.errors?.['email']">Please enter a valid email address</span>
+      </mat-error>
+    </mat-form-field>
+    <br/>
+
+    <div *ngIf="isLecturerRegistration">
+      <mat-form-field appearance="fill">
+        <mat-label>Name of the course :</mat-label>
+        <input matInput id="courseName" [(ngModel)]="courseName"  />
+      </mat-form-field>
+    </div>
+    <br/>
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Register</button>
+  </form>
+
+  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+</div>
+
+<!-- <div class="register-container">
+  <h2 class="style-title">Register</h2>
+  <form (ngSubmit)="register()" novalidate>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Code:</mat-label>
+      <input matInput [(ngModel)]="userCode" name="userCode"  readonly />
+    </mat-form-field>
+    <br/>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Name :</mat-label>
+      <input matInput id="username" [(ngModel)]="username" name="username" required />
+    </mat-form-field>
+    <br/>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Password:</mat-label>
+      <input matInput id="password" [(ngModel)]="password" name="password" type="password" required />
+    </mat-form-field>
+    <br/>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email:</mat-label>
+      <input matInput id="email" [(ngModel)]="email" name="email" type="email" required email #emailModel="ngModel" />
+      <mat-error *ngIf="emailModel.invalid && emailModel.touched">
+        <span *ngIf="emailModel.errors?.['required']">This field is required</span>
+        <span *ngIf="emailModel.errors?.['email']">Please enter a valid email address</span>
+      </mat-error>
+    </mat-form-field>
+    <br/>
+
+   
+    <div *ngIf="isLecturerRegistration">
+      <mat-form-field appearance="fill">
+        <mat-label>Name of the course :</mat-label>
+        <input matInput id="courseName" [(ngModel)]="courseName" name="courseName" />
+      </mat-form-field>
+    </div>
+    <br/>
+    <button mat-raised-button color="primary" type="submit">Registrer</button>
+  </form>
+
+  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+</div> -->
+
+<!-- <div class="register-container">
   <h2 class="style-title">הרשמה</h2>
   <form (ngSubmit)="register()">
     <mat-form-field appearance="fill">
@@ -35,4 +125,4 @@
 
   <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
 </div>
-
+ -->

@@ -1,4 +1,76 @@
 
+
+<!-- צביעת הכרטיס רק אם המשתמש מחובר והקורס מתחיל בשבוע הקרוב -->
+<div [ngClass]="{'highlighted-card': authService.isAuthenticated() && isHighlighted}" class="course-card">
+  <div class="course-image-container">
+    <img [src]="course.imagePath" alt="Course Image" class="course-image" />
+  </div>
+
+  <div class="course-details-container">
+    <!-- הצגת שדות הקטגוריה רק אם המשתמש מחובר -->
+    <ng-container *ngIf="authService.isAuthenticated()">
+      <div class="course-category">
+        <img [src]="course.category.iconPath" alt="Category Icon" class="category-icon" />
+        <span class="category-name">{{ course.category.name }}</span>
+      </div>
+    </ng-container>
+
+    <div class="course-details">
+      <h2 class="course-name">{{ course.courseName }}</h2>
+      <p><strong>Number of Lessons:</strong> {{ course.numberOfLessons }}</p>
+      <p><strong>Learning Method:</strong> {{ getLearningMethodEnum(course.learningMethod) | learningModeIcon }}</p>
+
+      <!-- הצגת שדות נוספים רק למשתמשים מחוברים -->
+      <ng-container *ngIf="authService.isAuthenticated()">
+        <p><strong>Lecturer Name:</strong> {{ lecturerName }}</p>
+        <p><strong>Start Date:</strong> {{ course.startDate | date }}</p>
+        <p><strong>Syllabus:</strong></p>
+        <ul>
+          <li *ngFor="let item of course.syllabus">{{ item }}</li>
+        </ul>
+      </ng-container>
+            <!-- הצגת כפתור עדכון רק אם המשתמש מחובר והוא המרצה -->
+
+      <button mat-raised-button *ngIf="(authService.isAuthenticated$ | async) && (isLecturer$ | async)" (click)="editCourse()">Update Course Details</button>
+
+    </div>
+  </div>
+</div>
+      <!-- <button mat-raised-button *ngIf="authService.isAuthenticated() && isLecturer" (click)="editCourse()">Update Course Details</button> -->
+
+<!-- <div [ngClass]="{'highlighted-card': isHighlighted}" class="course-card">
+  <div class="course-image-container">
+    <img [src]="course.imagePath" alt="Course Image" class="course-image" />
+  </div>
+
+  <div class="course-details-container">
+    <div class="course-category">
+      <img [src]="course.category.iconPath" alt="Category Icon" class="category-icon" />
+      <span class="category-name">{{ course.category.name }}</span>
+    </div>
+
+    <div class="course-details">
+      <h2 class="course-name">{{ course.courseName }}</h2>
+      <p><strong>Number of Lessons:</strong> {{ course.numberOfLessons }}</p>
+      <p><strong>Learning Method:</strong> {{ getLearningMethodEnum(course.learningMethod) | learningModeIcon }}</p>
+
+      <! הצגת שדות נוספים רק למשתמשים מחוברים --> 
+      <!-- <ng-container *ngIf="authService.isAuthenticated()">
+        <p><strong>Lecturer Name:</strong> {{ lecturerName }}</p>
+        <p><strong>Start Date:</strong> {{ course.startDate | date }}</p>
+        <p><strong>Syllabus:</strong></p>
+        <ul>
+          <li *ngFor="let item of course.syllabus">{{ item }}</li>
+        </ul>
+      </ng-container> -->
+
+      <!-- הצגת כפתור עדכון רק אם המשתמש הוא המרצה -->
+      <!-- <button mat-raised-button *ngIf="isLecturer" (click)="editCourse()">Update Course Details</button>
+    </div>
+  </div>
+</div> --> 
+
+<!-- 
 <div [ngClass]="{'highlighted-card': isHighlighted}" class="course-card">
   <div class="course-image-container">
     <img [src]="course.imagePath" alt="Course Image" class="course-image" />
@@ -14,7 +86,8 @@
       <p><strong>Number of Lessons:</strong> {{ course.numberOfLessons }}</p>
       <p><strong>Start Date:</strong> {{ course.startDate | date }}</p>
       <p><strong>Learning Method:</strong> {{ getLearningMethodEnum(course.learningMethod) | learningModeIcon }}</p>
-      <p><strong>סילבוס:</strong></p>
+      <p><strong>syllabus:</strong></p>
+      
       <ul>
         <li *ngFor="let item of course.syllabus">{{ item }}</li>
       </ul>
@@ -23,4 +96,4 @@
     </div>
   </div>
 </div>
-
+ -->

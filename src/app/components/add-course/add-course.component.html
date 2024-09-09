@@ -1,12 +1,12 @@
 <form [formGroup]="courseForm" (ngSubmit)="onSubmit()" class="add-course-container">
-  <h2 class="style-title">הוספת קורס</h2>
+  <h2 class="style-title">Add-Course </h2>
   
   <div class="form-row">
     <mat-form-field appearance="fill">
       <mat-label>Code</mat-label>
-      <input matInput formControlName="code">
+      <input matInput formControlName="code" readonly>
     </mat-form-field>
-    
+       
     <mat-form-field appearance="fill">
       <mat-label>Name</mat-label>
       <input matInput formControlName="name">
@@ -49,6 +49,8 @@
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
+   
+    
   </div>
 
   <div formArrayName="syllabus">

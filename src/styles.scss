@@ -4,10 +4,10 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, 'Arial', sans-serif; }
 .style-title{
     color: #e91e63; /* צבע הכותרת */
-    font-family: 'Arial', sans-serif; /* גופן תואם לכותרת האתר */
-    font-weight: bold; /* עיצוב טקסט בולט */
-    text-align: center; /* מרכז את הכותרת */
-    font-size: 17px; /* גודל טקסט קטן יותר מהכותרת הראשית */
+    font-family: 'Arial', sans-serif !important;
+   font-weight: bold !important;
+   text-align: center ;
+    font-size: 25px !important;
     margin: 0; /* מבטל רווחים סביב הכותרת */
     padding: 10px; /* רווח פנימי סביב הכותרת, אם נדרש */
   }

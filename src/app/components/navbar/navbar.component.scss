@@ -39,3 +39,17 @@
 .navbar .logout:hover {
   background-color: #b71c1c; /* Darker red color for hover effect */
 }
+
+.username-initial {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white; /* צבע רקע לעיגול */
+  color: #e91e63; /* Rose color */
+  text-align: center;
+  line-height: 40px; /* שורה בגובה האות */
+  font-size: 20px; /* גודל האות */
+  z-index: 9999;
+  font-family: Arial, sans-serif; /* הגדרת גופן במידת הצורך */
+}

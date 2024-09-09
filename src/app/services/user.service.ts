@@ -1,37 +1,72 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { User } from '../models/user.model';
-import { Observable, catchError, of, throwError } from 'rxjs';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { isPlatformBrowser } from '@angular/common';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:3000/users'; // כתובת ה-API שלך
+  private apiUrl = 'http://localhost:3000/users'; // Address of your API
+  private currentUserSubject = new BehaviorSubject<User | null>(null);
+  public currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
-
-  saveCurrentUser(user: User): void {
-    sessionStorage.setItem('currentUser', JSON.stringify(user));
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {
+    this.loadCurrentUser(); // Load current user on service initialization
   }
 
-  getCurrentUser(): User | null {
-    const userString = sessionStorage.getItem('currentUser');
-    if (userString) {
-      try {
-        return JSON.parse(userString);
-      } catch (error) {
-        console.error('Error parsing user from sessionStorage:', error);
-        return null;
+  private loadCurrentUser(): void {
+    this.getCurrentUser().subscribe(user => {
+      this.currentUserSubject.next(user);
+    });
+  }
+
+  // saveCurrentUser(user: User): void {
+  //   if (isPlatformBrowser(this.platformId)) {
+  //     sessionStorage.setItem('currentUser', JSON.stringify(user));
+  //     this.currentUserSubject.next(user); // Update the currentUserSubject
+  //   }
+  // }
+  saveCurrentUser(user: User): void {
+    if (isPlatformBrowser(this.platformId)) {
+        sessionStorage.setItem('currentUser', JSON.stringify(user)); // שמירת המשתמש ב-sessionStorage
+        this.currentUserSubject.next(user); // עדכון הסטייט של המשתמש
+    }
+}
+
+  getCurrentUser(): Observable<User | null> {
+    if (isPlatformBrowser(this.platformId)) {
+      const userString = sessionStorage.getItem('currentUser');
+      if (userString) {
+        try {
+          const user: User = JSON.parse(userString);
+          if (this.isValidUser(user)) {
+            return of(user);
+          } else {
+            console.error('Invalid user object in sessionStorage:', user);
+            return of(null);
+          }
+        } catch (error) {
+          console.error('Error parsing user from sessionStorage:', error);
+          return of(null);
+        }
       }
     }
-    return null;
+    return of(null);
+  }
+
+  private isValidUser(user: any): user is User {
+    return user && typeof user === 'object' && 'username' in user;
   }
 
   logout(): void {
-    sessionStorage.removeItem('currentUser');
+    if (isPlatformBrowser(this.platformId)) {
+      sessionStorage.removeItem('currentUser');
+      this.currentUserSubject.next(null); // Update the currentUserSubject to null
+    }
   }
-
 
   getUserByUsername(username: string): Observable<User | null> {
     const url = `${this.apiUrl}/${encodeURIComponent(username)}`;
@@ -42,7 +77,7 @@ export class UserService {
       })
     );
   }
-  
+
   addUser(user: User): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}`, user).pipe(
       catchError((error: HttpErrorResponse) => {
@@ -52,3 +87,150 @@ export class UserService {
     );
   }
 }
+
+// import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+// import { User } from '../models/user.model';
+// import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+// import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+// import { isPlatformBrowser } from '@angular/common';
+// import { catchError } from 'rxjs/operators';
+
+// @Injectable({
+//   providedIn: 'root'
+// })
+// export class UserService {
+//   private apiUrl = 'http://localhost:3000/users'; // Address of your API
+//   private currentUserSubject = new BehaviorSubject<User | null>(null);
+//   public currentUser$ = this.currentUserSubject.asObservable();
+  
+//   constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
+
+//   saveCurrentUser(user: User): void {
+//     if (isPlatformBrowser(this.platformId)) {
+//       sessionStorage.setItem('currentUser', JSON.stringify(user));
+//     }
+//   }
+
+//   getCurrentUser(): Observable<User | null> {
+//     if (isPlatformBrowser(this.platformId)) {
+//       const userString = sessionStorage.getItem('currentUser');
+//       if (userString) {
+//         try {
+//           const user: User = JSON.parse(userString);
+//           if (this.isValidUser(user)) {
+//             return of(user);
+//           } else {
+//             console.error('Invalid user object in sessionStorage:', user);
+//             return of(null);
+//           }
+//         } catch (error) {
+//           console.error('Error parsing user from sessionStorage:', error);
+//           return of(null);
+//         }
+//       }
+//     }
+//     return of(null);
+//   }
+
+//   private isValidUser(user: any): user is User {
+//     return user && typeof user === 'object' && 'username' in user;
+//   }
+
+//   logout(): void {
+//     if (isPlatformBrowser(this.platformId)) {
+//       sessionStorage.removeItem('currentUser');
+//     }
+//   }
+
+//   getUserByUsername(username: string): Observable<User | null> {
+//     const url = `${this.apiUrl}/${encodeURIComponent(username)}`;
+//     return this.http.get<User | null>(url).pipe(
+//       catchError(error => {
+//         console.error('Error fetching user by username:', error);
+//         return of(null); // Return null if user not found
+//       })
+//     );
+//   }
+
+//   addUser(user: User): Observable<void> {
+//     return this.http.post<void>(`${this.apiUrl}`, user).pipe(
+//       catchError((error: HttpErrorResponse) => {
+//         console.error('Error adding user:', error);
+//         return throwError(error);
+//       })
+//     );
+//   }
+// }
+
+
+// import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+// import { User } from '../models/user.model';
+// import { Observable, catchError, of, throwError } from 'rxjs';
+// import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+// import { isPlatformBrowser } from '@angular/common'; // וודא ייבוא זה
+
+
+// @Injectable({
+//   providedIn: 'root'
+// })
+// export class UserService {
+//   private apiUrl = 'http://localhost:3000/users'; // Address of your API
+
+//   constructor(private http: HttpClient,@Inject(PLATFORM_ID) private platformId: Object) {}
+
+//   saveCurrentUser(user: User): void {
+//     if (typeof window !== 'undefined' && typeof window.sessionStorage !== 'undefined') {
+//       sessionStorage.setItem('currentUser', JSON.stringify(user));
+//     }
+//   }
+
+//   getCurrentUser(): Observable<User | null> {
+//     if (isPlatformBrowser(this.platformId)) {
+//       const userString = sessionStorage.getItem('currentUser');
+//       if (userString) {
+//         try {
+//           const user: User = JSON.parse(userString);
+//           if (this.isValidUser(user)) {
+//             return of(user);
+//           } else {
+//             console.error('Invalid user object in sessionStorage:', user);
+//             return of(null);
+//           }
+//         } catch (error) {
+//           console.error('Error parsing user from sessionStorage:', error);
+//           return of(null);
+//         }
+//       }
+//     }
+//     return of(null);
+//   }
+
+//   private isValidUser(user: any): user is User {
+//     // הוספת לוגיקה לבדיקת תקינות המשתמש
+//     return user && typeof user === 'object' && 'username' in user;
+//   }
+
+//   logout(): void {
+//     sessionStorage.removeItem('currentUser');
+//   }
+
+
+//   getUserByUsername(username: string): Observable<User | null> {
+//     const url = `${this.apiUrl}/${encodeURIComponent(username)}`;
+//     return this.http.get<User | null>(url).pipe(
+//       catchError(error => {
+//         console.error('Error fetching user by username:', error);
+//         return of(null); // Return null if user not found
+//       })
+//     );
+//   }
+  
+//   addUser(user: User): Observable<void> {
+//     return this.http.post<void>(`${this.apiUrl}`, user).pipe(
+//       catchError((error: HttpErrorResponse) => {
+//         console.error('Error adding user:', error);
+//         return throwError(error);
+//       })
+//     );
+//   }
+// }

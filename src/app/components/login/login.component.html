@@ -1,9 +1,9 @@
 <div class="login-container">
-  <h2 class="style-title">התחברות</h2>
+  <h2 class="style-title">Login</h2>
   <form #loginForm="ngForm" (ngSubmit)="login()" class="login-form">
     <!-- Username Field -->
     <mat-form-field appearance="fill">
-      <mat-label>שם משתמש</mat-label>
+      <mat-label>Name: </mat-label>
       <input 
         matInput 
         id="username" 
@@ -14,13 +14,13 @@
         #usernameInput="ngModel"
         aria-required="true">
       <mat-error *ngIf="usernameInput.invalid && usernameInput.touched">
-        שדה זה הינו חובה
-      </mat-error>
+        This field is required     
+       </mat-error>
     </mat-form-field>
 
     <!-- Password Field -->
     <mat-form-field appearance="fill">
-      <mat-label>סיסמא</mat-label>
+      <mat-label>Password:</mat-label>
       <input 
         matInput 
         id="password" 
@@ -31,14 +31,13 @@
         #passwordInput="ngModel"
         aria-required="true">
       <mat-error *ngIf="passwordInput.invalid && passwordInput.touched">
-        שדה זה הינו חובה
+        This field is required
       </mat-error>
     </mat-form-field>
 
     <!-- Submit Button -->
     <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">
-      התחבר
-    </button>
+      connect    </button>
   </form>
   <br/>
   <!-- Error Message -->
@@ -46,7 +45,7 @@
   
   <!-- Register Lecturer Link -->
   <p>
-    <a mat-button (click)="registerLecturer()">הרשמת מרצים</a>
+    <a mat-button (click)="registerLecturer()">Registration of lecturers </a>
   </p>
 </div>
 

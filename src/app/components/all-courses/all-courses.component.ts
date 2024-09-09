@@ -47,26 +47,42 @@ export class AllCoursesComponent implements OnInit, OnDestroy {
     private categoryService: CategoryService,
     private router: Router
   ) {}
-
   ngOnInit(): void {
-    this.authSubscription = this.authService.isAuthenticated$.subscribe(isAuth => {
-      this.isAuthenticated = isAuth;
-      if (this.isAuthenticated) {
-        this.loadCourses();
-        this.loadCategories();
-      }
-    });
-
-    if (this.authService.isAuthenticated()) {
-      this.isAuthenticated = true;
-      this.loadCourses();
-      this.loadCategories();
+    // הסר את הבדיקה על isAuthenticated
+    this.loadCourses();
+    this.loadCategories();
+  
+    // אם אתה עדיין מעוניין לבדוק אם המשתמש מחובר לצורך פעולות אחרות, שמור על המנוי הזה
+    // this.authSubscription = this.authService.isAuthenticated$.subscribe(isAuth => {
+    //   this.isAuthenticated = isAuth;
+    // }
+    // );
+  }
+  ngOnDestroy(): void {
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
     }
   }
+  
+  // ngOnInit(): void {
+  //   this.authSubscription = this.authService.isAuthenticated$.subscribe(isAuth => {
+  //     this.isAuthenticated = isAuth;
+  //     if (this.isAuthenticated) {
+  //       this.loadCourses();
+  //       this.loadCategories();
+  //     }
+  //   });
 
-  ngOnDestroy(): void {
-    this.authSubscription.unsubscribe();
-  }
+  //   if (this.authService.isAuthenticated()) {
+  //     this.isAuthenticated = true;
+  //     this.loadCourses();
+  //     this.loadCategories();
+  //   }
+  // }
+
+  // ngOnDestroy(): void {
+  //   this.authSubscription.unsubscribe();
+  // }
 
   loadCourses() {
     this.courseService.getAllCourses().subscribe((data: Course[]) => {

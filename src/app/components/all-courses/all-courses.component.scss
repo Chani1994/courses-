@@ -2,35 +2,178 @@
   text-align: center;
   margin: 20px;
 }
+
 .filter-container {
-  display: flex; /* מסדר את הפילטרים בשורה אחת */
-  justify-content: center; /* ממרכז את כל הפילטרים */
-  padding: 10px 0; /* רווח מעל ומתחת */
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+  flex-wrap: wrap; /* מוודא שהפילטרים יסתדרו בצורה רספונסיבית */
 }
 
 .filter-content {
-  display: flex; /* מסדר את הפילטרים בשורה אחת */
-  gap: 20px; /* מרווח בין הפילטרים */
+  display: flex;
+  flex-wrap: wrap; /* מאפשר לשבור את הפילטרים לשורות נוספות במסכים קטנים */
+  gap: 20px;
+  justify-content: center; /* מוודא שהפילטרים יהיו במרכז גם במסכים קטנים */
+  width: 100%;
 }
 
 mat-form-field {
-  width: auto; /* שומר על גודל אוטומטי */
+  width: 100%; /* מאפשר לפילטרים לתפוס את כל רוחב המיכל */
   min-width: 200px; /* רוחב מינימלי לפילטרים */
+  max-width: 300px; /* מוודא שהפילטרים לא יהיו רחבים מדי */
+  flex: 1; /* מאפשר לפילטרים להתפזר באופן שווה */
 }
-
-/* New styles for course list */
 .course-list {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 100%;
+  flex-direction: column; /* כרטיסים אחד מתחת לשני */
+  width: 100%; /* תופס 100% מרוחב המיכל */
+  padding: 0; /* מסיר רווחים נוספים */
+  box-sizing: border-box; /* מבטיח שאין חריגה מהרוחב */
 }
 
 .course-tile {
-  padding: 8px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
+  width: 100%; /* הכרטיסים יתפסו את כל הרוחב הזמין */
+  padding: 16px; /* נותן קצת רווח פנימי */
+  box-sizing: border-box; /* מונע חריגה מהרוחב */
 }
 
+.course-details-container {
+  width: 100%; /* הכרטיס יתפוס את כל רוחב המיכל */
+  max-width: 1200px; /* מקסימום רוחב במקרה של מסכים גדולים */
+  margin: 0 auto; /* ממרכז את הכרטיסים במסכים רחבים */
+  box-sizing: border-box; /* מבטיח שאין גלילה אופקית */
+}
+
+// .course-list {
+//   display: flex;
+//   flex-direction: column; /* מסדר את הכרטיסים אחד מתחת לשני */
+//   width: 100%; /* מבטיח שהכרטיסים יתפסו את כל רוחב המיכל */
+//   padding: 0 16px; /* רווח קטן בצדדים כדי למנוע גלילה אופקית */
+// }
+
+// .course-tile {
+//   width: 100%; /* הכרטיס יתפוס 100% מרוחב העמוד */
+//   padding: 8px;
+//   box-sizing: border-box; /* מבטיח שהכרטיס לא יחרוג מהרוחב המוגדר */
+//   display: flex;
+//   justify-content: center;
+// }
+
+// .course-details-container {
+//   width: 100%; /* הכרטיס עצמו יותאם לרוחב מלא */
+//   max-width: 1200px; /* אם תרצי, ניתן להגביל רוחב מקסימלי */
+//   box-sizing: border-box;
+// }
+// }
+
+
+@media (max-width: 1200px) {
+  .course-details-container {
+    max-width: 100%; /* במסכים בינוניים הכרטיס יתפוס את כל הרוחב */
+  }
+}
+
+@media (max-width: 600px) {
+  .course-details-container {
+    max-width: 100%; /* במסכים קטנים הכרטיס גם יתפוס 100% */
+  }
+}
+// @media (max-width: 1200px) {
+//   .course-tile {
+//     flex: 1 1 calc(33.33% - 32px); /* מציג 3 כרטיסים בשורה במסכים בינוניים */
+//     max-width: calc(33.33% - 32px);
+//   }
+//   .course-details-container {
+//     max-width: 100%; /* במסכים קטנים יותר הכרטיס יותאם למלוא רוחב המסך */
+//   }
+// }
+
+// @media (max-width: 900px) {
+//   .course-tile {
+//     flex: 1 1 calc(50% - 32px); /* מציג 2 כרטיסים בשורה במסכים קטנים */
+//     max-width: calc(50% - 32px);
+//   }
+// }
+
+// @media (max-width: 600px) {
+//   .course-tile {
+//     flex: 1 1 100%; /* מציג כרטיס אחד בשורה במסכים קטנים מאוד */
+//     max-width: 100%;
+//   }
+//   .course-details-container {
+//     max-width: 100%; /* במסכים קטנים מאוד הכרטיס גם יותאם לרוחב מלא */
+//   }
+// }
+
+// /* עבור מסכים קטנים במיוחד */
+// @media (max-width: 500px) {
+//   .filter-content {
+//     flex-direction: column; /* מסדר את הפילטרים אחד מתחת לשני במסכים קטנים */
+//     gap: 10px; /* מפחית את המרווח בין הפילטרים */
+//     width: 100%;
+//   }
   
+//   mat-form-field {
+//     width: 100%; /* מוודא שהפילטרים יתאימו לרוחב המסך במסכים קטנים */
+//     max-width: none; /* מסיר את ההגבלה על רוחב מקסימלי במסכים קטנים */
+//   }
+// }
+
+// .error-message {
+//   text-align: center;
+//   margin: 20px;
+// }
+// .filter-container {
+//   display: flex; /* מסדר את הפילטרים בשורה אחת */
+//   justify-content: center; /* ממרכז את כל הפילטרים */
+//   padding: 10px 0; /* רווח מעל ומתחת */
+// }
+
+// .filter-content {
+//   display: flex; /* מסדר את הפילטרים בשורה אחת */
+//   gap: 20px; /* מרווח בין הפילטרים */
+// }
+
+// mat-form-field {
+//   width: auto; /* שומר על גודל אוטומטי */
+//   min-width: 200px; /* רוחב מינימלי לפילטרים */
+// }
+
+// /* New styles for course list */
+// .course-list {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 16px;
+//   width: 100%;
+// }
+
+// .course-tile {
+//   padding: 8px;
+//   width: 100%;
+//   display: flex;
+//   justify-content: center;
+// }
+
+  
+
+// @media (max-width: 1200px) {
+//   .course-tile {
+//     flex: 1 1 calc(33.33% - 32px); /* מציג 3 כרטיסים בשורה במסכים קטנים יותר */
+//     max-width: calc(33.33% - 32px);
+//   }
+// }
+
+// @media (max-width: 900px) {
+//   .course-tile {
+//     flex: 1 1 calc(50% - 32px); /* מציג 2 כרטיסים בשורה במסכים קטנים */
+//     max-width: calc(50% - 32px);
+//   }
+// }
+
+// @media (max-width: 600px) {
+//   .course-tile {
+//     flex: 1 1 100%; /* מציג כרטיס אחד בשורה במסכים קטנים מאוד */
+//     max-width: 100%;
+//   }
+// }

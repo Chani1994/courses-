@@ -1,11 +1,6 @@
 
-<div *ngIf="!isAuthenticated" class="error-message">
-  <p>אופסססססס, אינך מחובר...</p>
-  <button mat-raised-button color="primary" (click)="goToLogin()">להתחברות לחץ כאן</button>
-</div>
 
-<div *ngIf="isAuthenticated">
-<h2 class="style-title">מגוון הקורסים</h2>
+<h2 class="style-title"> All-Courses</h2>
   <div class="filter-container">
     <div class="filter-content">
       <mat-form-field appearance="fill">
@@ -29,13 +24,12 @@
     </div>
   </div>
   
-  <!-- Replacing mat-grid-list with a simple div container -->
   <div class="course-list">
     <div *ngFor="let course of filteredCourses" class="course-tile">
       <app-course-details [course]="course"></app-course-details>
     </div>
   </div>
-</div>
+
 
 
 <!-- <p>all-courses works!</p>
