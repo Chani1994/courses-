@@ -1,17 +1,5 @@
-<!-- <nav class="navbar">
-  <ul>
-    <div *ngIf="(username$ | async) as username">
-      <span class="username-initial">{{ (username as string)[0] }}</span>
-    </div>
-    
-    <li><a [routerLink]="'login'">Login</a></li>
-    <li><a [routerLink]="'register'">Register</a></li>
-     <li><a [routerLink]="'all-courses'">All Courses</a></li>
-    <li><a [routerLink]="'add-courses'">Add Course</a></li> 
-    <li><a (click)="onLogout()">Log Out</a></li>
-   </ul>
-</nav> 
-  --><nav class="navbar">
+
+  <nav class="navbar">
   <ul>
     <div *ngIf="(isAuthenticated$ | async)">
       <div *ngIf="(username$ | async) as username">
