@@ -69,42 +69,55 @@ export class CourseDetailsComponent implements OnInit {
     this.isHighlighted = courseStartDate >= today && courseStartDate <= oneWeekLater;
   }
 
-  checkIfLecturer(): void {
-    if (!this.course || !this.course.lecturerCode) {
-      console.log('Course or lecturer code is not defined.');
-      return;
-    }
 
-    this.isLecturer$ = this.currentUser$.pipe(
-      map((user: User | null) => user ? user.username === this.course.lecturerCode.trim() : false)
-    );
-
-    // להירשם ל-Observable כדי להציג את הסטטוס של המרצה
-    this.isLecturer$.subscribe(isLecturer => {
-      console.log('Is lecturer:', isLecturer);
-    });
+  // Method to check if the current user is the lecturer for the course
+checkIfLecturer(): void { 
+  if (!this.course || !this.course.lecturerCode) {
+    console.log('Course or lecturer code is not defined.');
+    return;
   }
+
+  // Trim the lecturer code to remove any extra whitespace
+  const trimmedLecturerCode = this.course.lecturerCode.trim();
+
+  // Use the current user observable to determine if they are the lecturer
+  this.isLecturer$ = this.currentUser$.pipe(
+    map((user: User | null) => user ? user.code === trimmedLecturerCode : false)
+  );
+
+  // Subscribe to the observable to display the lecturer status
+  this.isLecturer$.subscribe(isLecturer => {
+    console.log('Is lecturer:', isLecturer);
+  });
+}
+
+// Method to load the lecturer's name based on the lecturer code
+loadLecturerName(): void {
+  if (!this.course || !this.course.lecturerCode) return;
+
+  // Trim the lecturer code to ensure there are no extra spaces
+  const trimmedLecturerCode = this.course.lecturerCode.trim();
+
+  // Fetch the lecturer's information from the service
+  this.lecturerService.getLecturerByCode(trimmedLecturerCode).subscribe(
+    (lecturer: Lecturer | undefined) => {
+      console.log('Lecturer fetched:', lecturer);
+      if (lecturer) {
+        this.lecturerName = lecturer.name;
+      } else {
+        console.log('Lecturer not found.');
+      }
+    },
+    (error) => {
+      console.error('Error fetching lecturer:', error);
+    }
+  );
+}
 
   editCourse(): void {
     this.router.navigate(['/edit-course', this.course.courseCode], {
       state: { course: this.course }
     });
-  }
-
-  loadLecturerName(): void {
-    if (!this.course || !this.course.lecturerCode) return;
-  
-    this.lecturerService.getLecturerByCode(this.course.lecturerCode.trim()).subscribe(
-      (lecturer: Lecturer | undefined) => {
-        console.log('Lecturer fetched:', lecturer);
-        if (lecturer) {
-          this.lecturerName = lecturer.name;
-        }
-      },
-      (error) => {
-        console.error('Error fetching lecturer:', error);
-      }
-    );
   }
 
   get learningModeAsString(): string {

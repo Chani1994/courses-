@@ -12,12 +12,53 @@ export class CourseService {
   private categoriesUrl = 'http://localhost:3000/categories'; // API URL for categories
 
   // קורסי ברירת מחדל לפי קטגוריות
-  private defaultCourses: Course[] = [
-    { category: { code: '001', name: 'הוראה', iconPath: 'assets/images/teach-1968076_1280.jpg' }, courseCode: 'DEF001', courseName: 'קורס אנגלית ', numberOfLessons: 10, startDate: new Date('2024-09-25'), syllabus: ['מבוא להוראה'], learningMethod: LearningMethod.Zoom, lecturerCode: 'משה', imagePath: 'assets/images/english-british-england-language-education-concept.jpg' },
-    { category: { code: '002', name: 'יצירה ואומנות', iconPath: 'assets/images/hand-4752642_1280.jpg' }, courseCode: 'DEF002', courseName: 'תפירה למתחילים', numberOfLessons: 5, startDate: new Date('2024-09-15'), syllabus: ['יסודות התפירה'], learningMethod: LearningMethod["In-Person"], lecturerCode: 'משה', imagePath: 'assets/images/top-view-variety-fabrics-with-thread-scissors.jpg' },
-    { category: { code: '003', name: 'מחשבים', iconPath: 'assets/images/pexels-pixabay-38568.jpg' }, courseCode: 'DEF003', courseName: 'קורס אדריכלות', numberOfLessons: 12, startDate: new Date('2024-10-30'), syllabus: [' מבוא לאדריכלות'], learningMethod: LearningMethod.Zoom, lecturerCode: 'משה', imagePath: 'assets/images/high-angle-architectural-objects-desk.jpg' },
-    { category: { code: '004', name: 'רפואה', iconPath: 'assets/images/syringes-3539565_1280.jpg' }, courseCode: 'DEF004', courseName: 'מזכירות רפואית', numberOfLessons: 8, startDate: new Date('2024-09-30'), syllabus: ['יסודות הרפואה'], learningMethod: LearningMethod["In-Person"], lecturerCode: 'משה', imagePath: 'assets/images/cold-1972619_1280.jpg' },
-  ];
+//   private defaultCourses: Course[] = [
+//     { 
+//         category: { code: '001', name: 'Teaching', iconPath: 'assets/images/teach-1968076_1280.jpg' }, 
+//         courseCode: 'DEF001', 
+//         courseName: 'English Course', 
+//         numberOfLessons: 10, 
+//         startDate: new Date('2024-09-25'), 
+//         syllabus: ['Introduction to Teaching'], 
+//         learningMethod: LearningMethod.Zoom,
+//         lecturerCode: 'USR-4662', 
+//         imagePath: 'assets/images/english-british-england-language-education-concept.jpg' 
+//     },
+//     { 
+//         category: { code: '002', name: 'Creation and Art', iconPath: 'assets/images/hand-4752642_1280.jpg' }, 
+//         courseCode: 'DEF002', 
+//         courseName: 'Sewing for Beginners', 
+//         numberOfLessons: 5, 
+//         startDate: new Date('2024-09-15'), 
+//         syllabus: ['Sewing Basics'], 
+//         learningMethod: LearningMethod["In-Person"], 
+//         lecturerCode: 'USR-8948', 
+//         imagePath: 'assets/images/top-view-variety-fabrics-with-thread-scissors.jpg' 
+//     },
+//     { 
+//         category: { code: '003', name: 'Computers', iconPath: 'assets/images/pexels-pixabay-38568.jpg' }, 
+//         courseCode: 'DEF003', 
+//         courseName: 'Architecture Course', 
+//         numberOfLessons: 12, 
+//         startDate: new Date('2024-10-30'), 
+//         syllabus: ['Introduction to Architecture'], 
+//         learningMethod: LearningMethod.Zoom, 
+//         lecturerCode: 'USR-7609', 
+//         imagePath: 'assets/images/high-angle-architectural-objects-desk.jpg' 
+//     },
+//     { 
+//         category: { code: '004', name: 'Medicine', iconPath: 'assets/images/syringes-3539565_1280.jpg' }, 
+//         courseCode: 'DEF004', 
+//         courseName: 'Medical Secretarial Studies', 
+//         numberOfLessons: 8, 
+//         startDate: new Date('2024-09-30'), 
+//         syllabus: ['Basics of Medicine'], 
+//         learningMethod: LearningMethod["In-Person"], 
+//         lecturerCode: 'USR-445', 
+//         imagePath: 'assets/images/cold-1972619_1280.jpg' 
+//     },
+// ];
+
 
   constructor(private http: HttpClient) {}
 
@@ -72,19 +113,19 @@ export class CourseService {
   }
 
   // בדיקת קורסי ברירת מחדל
-  checkAndInitializeDefaultCourses(): Observable<void> {
-    return this.getAllCourses().pipe(
-      mergeMap(courses => {
-        if (courses.length === 0) {
-          return this.initializeCourses(this.defaultCourses).pipe(
-            map(() => undefined) // המרה של Observable<void[]> ל-Observable<void>
-          );
-        }
-        return of(undefined); // במקרה שיש כבר קורסים, חזור על Observable<void> ריק
-      }),
-      catchError(this.handleError<void>('checkAndInitializeDefaultCourses'))
-    );
-  }
+  // checkAndInitializeDefaultCourses(): Observable<void> {
+  //   return this.getAllCourses().pipe(
+  //     mergeMap(courses => {
+  //       if (courses.length === 0) {
+  //         return this.initializeCourses(this.defaultCourses).pipe(
+  //           map(() => undefined) // המרה של Observable<void[]> ל-Observable<void>
+  //         );
+  //       }
+  //       return of(undefined); // במקרה שיש כבר קורסים, חזור על Observable<void> ריק
+  //     }),
+  //     catchError(this.handleError<void>('checkAndInitializeDefaultCourses'))
+  //   );
+  // }
   
   // Method to initialize courses by posting them to the server
   initializeCourses(courses: Course[]): Observable<void[]> {

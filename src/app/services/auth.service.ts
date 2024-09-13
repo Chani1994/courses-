@@ -103,46 +103,82 @@ export class AuthService {
     console.log('Current User:', user);
     this.currentUserSubject.next(user);
   }
-  
   login(username: string, password: string): Observable<User> {
     return this.http.post<User>(`${this.apiUrl}/login`, { username, password }).pipe(
       tap(response => {
         this.handleAuthentication(response);
-        this.onLoginSuccess(); // קריאה לפונקציה על התחברות מוצלחת
       }),
       catchError(error => {
-        console.error('Login error', error);
-  
         if (error.status === 401) {
           Swal.fire({
             icon: 'error',
-            title: 'שגיאת כניסה',
-            text: 'שם משתמש או סיסמה שגויים. אנא נסה שוב.',
-            confirmButtonText: 'אוקי'
+            title: 'Login error',
+            text: 'Invalid username or password. Please try again.',
+            confirmButtonText: 'OK'
           });
-          return throwError('Invalid username or password. Please try again.');
+          return of(); // מחזירה Observable ריק
         } else if (error.status === 404) {
           Swal.fire({
             icon: 'info',
-            title: 'משתמש לא נמצא',
-            text: 'מעבר לרישום...',
-            confirmButtonText: 'אוקי'
+            title: 'User not found',
+            text: 'Beyond registration...',
+            confirmButtonText: 'OK'
           }).then(() => {
-            this.router.navigate(['/register'], { queryParams: { username } });
+            this.router.navigate(['/register'], { queryParams: { username, password } });
           });
-          return throwError('User not found. Redirecting to registration.');
+          return of(); // מחזירה Observable ריק
         } else {
           Swal.fire({
             icon: 'error',
-            title: 'שגיאה',
-            text: 'משהו השתבש; אנא נסה שוב מאוחר יותר.',
-            confirmButtonText: 'אוקי'
+            title: 'Error',
+            text: 'Something went wrong; Please try again later.',
+            confirmButtonText: 'OK'
           });
-          return throwError('Something went wrong; please try again later.');
+          return of(); // מחזירה Observable ריק
         }
       })
     );
   }
+  
+  
+  // login(username: string, password: string): Observable<User> {
+  //   return this.http.post<User>(`${this.apiUrl}/login`, { username, password }).pipe(
+  //     tap(response => {
+  //       this.handleAuthentication(response);
+  //     }),
+  //     catchError(error => {
+  //       console.error('Login error', error);
+  
+  //       if (error.status === 401) {
+  //         Swal.fire({
+  //           icon: 'error',
+  //           title: 'Login error',
+  //           text: 'Invalid username or password. Please try again.',
+  //           confirmButtonText: 'OK'
+  //         });
+  //         return throwError('Invalid username or password. Please try again.');
+  //       } else if (error.status === 404) {
+  //         Swal.fire({
+  //           icon: 'info',
+  //           title: 'User not found',
+  //           text: 'Beyond registration...',
+  //           confirmButtonText: 'OK'
+  //         }).then(() => {
+  //           this.router.navigate(['/register'], { queryParams: { username,password } });
+  //         });
+  //         return throwError('User not found. Redirecting to registration.');
+  //       } else {
+  //         Swal.fire({
+  //           icon: 'error',
+  //           title: 'Error',
+  //           text: 'Something went wrong; Please try again later.',
+  //           confirmButtonText: 'OK'
+  //         });
+  //         return throwError('Something went wrong; please try again later.');
+  //       }
+  //     })
+  //   );
+  // }
   
  
   private handleAuthentication(response: any): void {
@@ -187,7 +223,5 @@ export class AuthService {
       }
     }
   }
-  private onLoginSuccess(): void {
-    console.log('Login successful!');
-  }
+ 
 }

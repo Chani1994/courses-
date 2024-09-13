@@ -13,6 +13,8 @@ import { User } from '../../models/user.model';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+  isMenuOpen = false;
+
   firstLetter$: Observable<string | null>;
   isAuthenticated$: Observable<boolean>;
   username$: Observable<string | null>;
@@ -39,13 +41,22 @@ export class NavbarComponent implements OnInit {
     // נקה את המנוי כאשר הקומפוננטה נהרסת
     this.subscriptions.unsubscribe();
   }
-  
+ 
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen; // משנה את מצב התצוגה
+  }
+
+  closeMenu() {
+    this.isMenuOpen = false; // סוגרת את התפריט
+  }
+
   onLogout(): void {
     const confirmLogout = confirm('Are you sure you want to log out?');
     if (confirmLogout) {
       this.authService.logout();
       sessionStorage.removeItem('jwtToken');
       sessionStorage.removeItem('currentUser');
+      this.closeMenu();
       this.router.navigate(['/login']);
     }
   }

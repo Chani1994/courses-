@@ -26,6 +26,7 @@ export class RegisterComponent implements OnInit {
   username: string = '';
   password: string = '';
   email: string = '';
+  address:string= '';
   courseName: string = '';
   isLecturerRegistration: boolean = false;
   errorMessage: string = '';
@@ -43,7 +44,9 @@ export class RegisterComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       console.log('Query params:', params); // הוסף לוגים לבדיקה
       this.username = params['username'] || '';
-      this.courseName = params['courseName'] || '';
+      this.password = params['password'] || '';
+
+      // this.courseName = params['courseName'] || '';
       this.isLecturerRegistration = params['isLecturer'] === 'true';
       this.generateUserCode(); // יצירת קוד אוטומטי
     });
@@ -55,24 +58,25 @@ export class RegisterComponent implements OnInit {
   register(form: NgForm): void {
    
     if (form.invalid) {
-      this.errorMessage = 'נא למלא את כל השדות הדרושים.';
+      this.errorMessage = 'Please fill in all required fields.';
       return;
     }
   
-    if (!this.username || !this.password || !this.email || (this.isLecturerRegistration && !this.courseName)) {
-      this.errorMessage = 'נא למלא את כל השדות הדרושים.';
+    if (!this.username || !this.password || !this.email ||!this.address|| (this.isLecturerRegistration && !this.courseName)) {
+      this.errorMessage = 'Please fill in all required fields.';
       return;
     }
   
     this.userService.getUserByUsername(this.username).subscribe(
       user => {
         if (user) {
-          this.errorMessage = 'משתמש קיים כבר!';
-          Swal.fire('שגיאה', this.errorMessage, 'error');
+          this.errorMessage = 'User already exists!';
+          Swal.fire('Error', this.errorMessage, 'error');
         } else {
           const newUser: User = {
             username: this.username,
             password: this.password,
+            address:this.address,
             email: this.email,
             code: this.userCode,
           };
@@ -83,9 +87,9 @@ export class RegisterComponent implements OnInit {
             // אם זה רישום של מרצה, הוסף מרצה
             if (this.isLecturerRegistration) {
               const newLecturer = {
-                code: newUser.username,
+                code: newUser.code,
                 name: newUser.username,
-                address: '',
+                address: newUser.address,
                 email: newUser.email,
                 password: newUser.password,
                 courseName: this.courseName
@@ -104,14 +108,14 @@ export class RegisterComponent implements OnInit {
           }, error => {
             console.error('Error adding user:', error);
             this.errorMessage = 'אירעה שגיאה במהלך הוספת המשתמש.';
-            Swal.fire('שגיאה', this.errorMessage, 'error');
+            Swal.fire('Error', this.errorMessage, 'error');
           });
         }
       },
       error => {
         console.error('Error checking if user exists:', error);
         this.errorMessage = 'אירעה שגיאה במהלך בדיקת קיום המשתמש.';
-        Swal.fire('שגיאה', this.errorMessage, 'error');
+        Swal.fire('Error', this.errorMessage, 'error');
       }
     );
   }
@@ -124,14 +128,15 @@ performLogin(): void {
         icon: 'success',
         title: 'Registration was successfully completed!',
         text: 'Welcome!',
-        confirmButtonText: 'אוקי'
+        confirmButtonText: 'OK'
       }).then((result) => {
         if (result.isConfirmed) {
           this.authService.saveCurrentUser({
             username: this.username,
             password: this.password,
+            address:this.address,
             email: this.email,
-            code: this.userCode
+            code: this.userCode,
           });
           const updatedUser = this.authService.getCurrentUser();
 
@@ -148,7 +153,7 @@ performLogin(): void {
     loginError => {
       console.error('Error logging in:', loginError);
       this.errorMessage = 'אירעה שגיאה במהלך ההתחברות.';
-      Swal.fire('שגיאה', this.errorMessage, 'error');
+      Swal.fire('Error', this.errorMessage, 'error');
     }
   );
 }

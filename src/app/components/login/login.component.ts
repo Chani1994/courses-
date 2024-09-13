@@ -32,67 +32,79 @@ export class LoginComponent {
 
 
 
-login(): void {
-  this.errorMessage = ''; // לנקות הודעות שגיאה קודמות
-
-  this.authService.login(this.username, this.password).subscribe(
-    (response: any) => {
-      if (response && response.token) {
-        sessionStorage.setItem('jwtToken', response.token);
-        this.authService.loadJwt();
-
-        this.userService.getUserByUsername(this.username).subscribe(
-          (user: User | null) => {
-            if (user) {
-              this.authService.saveCurrentUser(user);
-              this.userService.saveCurrentUser(user);
-              Swal.fire({
-                icon: 'success',
-                title: 'Successfully connected!',
-                text: 'Welcome!',
-                confirmButtonText: 'אוקי'
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  this.router.navigate(['/all-courses']);
-                }
-              });
-            } else {
-              this.router.navigate(['/register'], { queryParams: { username: this.username } });
+  login(): void {
+    this.errorMessage = ''; // לנקות הודעות שגיאה קודמות
+  
+    this.authService.login(this.username, this.password).subscribe(
+      (response: any) => {
+        if (response && response.token) {
+          // שמירת הטוקן
+          sessionStorage.setItem('jwtToken', response.token);
+          this.authService.loadJwt();
+  
+          // שליפת פרטי המשתמש
+          this.userService.getUserByUsername(this.username).subscribe(
+            (user: User | null) => {
+              if (user) {
+                this.authService.saveCurrentUser(user);
+                this.userService.saveCurrentUser(user);
+                
+                // הצגת הודעת הצלחה עם SweetAlert
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Successfully connected!',
+                  text: 'Welcome!',
+                  confirmButtonText: 'OK'
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    // ניתוב לעמוד הקורסים
+                    this.router.navigate(['/all-courses']);
+                  }
+                });
+              } else {
+                // במקרה שאין משתמש - ניתוב לרישום
+                this.router.navigate(['/register'], { queryParams: { username: this.username, password: this.password } });
+              }
+            },
+            (error) => {
+              // טיפול בשגיאה בקבלת פרטי המשתמש - ניתוב לרישום
+              this.router.navigate(['/register'], { queryParams: { username: this.username, password: this.password } });
             }
-          },
-          (error) => {
-            console.error('שגיאה בקבלת פרטי המשתמש:', error);
-            this.router.navigate(['/register'], { queryParams: { username: this.username } });
-          }
-        );
-      } else {
-        console.error('הכניסה נכשלה: אין טוקן');
-        this.errorMessage = 'אירעה שגיאה במהלך התחברות.';
+          );
+        } else {
+          // במקרה ואין טוקן בהתחברות
+          this.errorMessage = 'Login failed: No token received.';
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: this.errorMessage,
+            confirmButtonText: 'OK'
+          });
+        }
+      },
+      (error) => {
+        // טיפול בשגיאה בהתחברות
+        this.errorMessage = 'Login failed: Incorrect username or password.';
         Swal.fire({
           icon: 'error',
-          title: 'שגיאה',
+          title: 'Login Error',
           text: this.errorMessage,
-          confirmButtonText: 'אוקי'
+          confirmButtonText: 'OK'
         });
       }
-    },
-    (error) => {
-      console.error('שגיאת כניסה:', error);
-    }
-  );
-}
-
-
+    );
+  }
+  
 handleUserNotFound(error?: any): void {
-    console.error('משתמש לא נמצא או שגיאה בקבלת המשתמש:', error);
+    // console.error('משתמש לא נמצא או שגיאה בקבלת המשתמש:', error);
     this.errorMessage = 'אירעה שגיאה במהלך קבלת פרטי המשתמש.';
-    Swal.fire('שגיאה', this.errorMessage, 'error');
+    Swal.fire('Error', this.errorMessage, 'error');
     this.router.navigate(['/register']);
 }
 
 
   registerLecturer(): void {
-    this.router.navigate(['/register'], { queryParams: { courseName: 'courseName', isLecturer: true } });
+    this.router.navigate(['/register'], { queryParams: {  isLecturer: true } });
   }
 
   private showErrorAlert(message: string): void {

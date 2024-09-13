@@ -9,16 +9,28 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Name :</mat-label>
-      <input matInput id="username" [(ngModel)]="username" name="username" required />
-    </mat-form-field>
+      <input matInput id="username" [(ngModel)]="username" name="username" required #namedInput="ngModel"/>
+      <mat-error *ngIf=" namedInput.touched">
+        <span *ngIf="namedInput.errors?.['required']">This field is required</span>  
+      </mat-error>
+        </mat-form-field>
     <br/>
-
     <mat-form-field appearance="fill">
       <mat-label>Password:</mat-label>
-      <input matInput id="password" [(ngModel)]="password" name="password" type="password" required />
+      <input matInput id="password" [(ngModel)]="password" name="password" type="password" required  #passwordInput="ngModel" />
+      <mat-error *ngIf=" passwordInput.touched">
+        <span *ngIf="passwordInput.errors?.['required']">This field is required</span>  
+      </mat-error>
+        </mat-form-field>
+    <br/>
+    <mat-form-field appearance="fill">
+      <mat-label>Address :</mat-label>
+      <input matInput id="address" [(ngModel)]="address" name="address" required #addressInput="ngModel"/>
+      <mat-error *ngIf=" addressInput.touched">
+        <span *ngIf="addressInput.errors?.['required']">This field is required</span>  
+      </mat-error>
     </mat-form-field>
     <br/>
-
     <mat-form-field appearance="fill">
       <mat-label>Email:</mat-label>
       <input matInput id="email" [(ngModel)]="email" name="email" type="email" required email #emailModel="ngModel" />
@@ -32,7 +44,7 @@
     <div *ngIf="isLecturerRegistration">
       <mat-form-field appearance="fill">
         <mat-label>Name of the course :</mat-label>
-        <input matInput id="courseName" [(ngModel)]="courseName"  />
+        <input matInput id="courseName" [(ngModel)]="courseName" name="courseName" required/>
       </mat-form-field>
     </div>
     <br/>
@@ -42,87 +54,4 @@
   <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
 </div>
 
-<!-- <div class="register-container">
-  <h2 class="style-title">Register</h2>
-  <form (ngSubmit)="register()" novalidate>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Code:</mat-label>
-      <input matInput [(ngModel)]="userCode" name="userCode"  readonly />
-    </mat-form-field>
-    <br/>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Name :</mat-label>
-      <input matInput id="username" [(ngModel)]="username" name="username" required />
-    </mat-form-field>
-    <br/>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Password:</mat-label>
-      <input matInput id="password" [(ngModel)]="password" name="password" type="password" required />
-    </mat-form-field>
-    <br/>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Email:</mat-label>
-      <input matInput id="email" [(ngModel)]="email" name="email" type="email" required email #emailModel="ngModel" />
-      <mat-error *ngIf="emailModel.invalid && emailModel.touched">
-        <span *ngIf="emailModel.errors?.['required']">This field is required</span>
-        <span *ngIf="emailModel.errors?.['email']">Please enter a valid email address</span>
-      </mat-error>
-    </mat-form-field>
-    <br/>
-
-   
-    <div *ngIf="isLecturerRegistration">
-      <mat-form-field appearance="fill">
-        <mat-label>Name of the course :</mat-label>
-        <input matInput id="courseName" [(ngModel)]="courseName" name="courseName" />
-      </mat-form-field>
-    </div>
-    <br/>
-    <button mat-raised-button color="primary" type="submit">Registrer</button>
-  </form>
-
-  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
-</div> -->
-
-<!-- <div class="register-container">
-  <h2 class="style-title">הרשמה</h2>
-  <form (ngSubmit)="register()">
-    <mat-form-field appearance="fill">
-      <mat-label>שם משתמש:</mat-label>
-      <input matInput id="username" [(ngModel)]="username" name="username" required />
-    </mat-form-field>
-    <br/>
-
-    <mat-form-field appearance="fill">
-      <mat-label>סיסמא:</mat-label>
-      <input matInput id="password" [(ngModel)]="password" name="password" type="password" required />
-    </mat-form-field>
-    <br/>
-
-    <mat-form-field appearance="fill">
-      <mat-label>מייל:</mat-label>
-      <input matInput id="email" [(ngModel)]="email" name="email" type="email" required email #emailModel="ngModel" />
-      <mat-error *ngIf="emailModel.invalid && emailModel.touched">
-        <span *ngIf="emailModel.errors?.['required']">שדה זה נדרש</span>
-        <span *ngIf="emailModel.errors?.['email']">נא להזין כתובת מייל חוקית</span>
-      </mat-error>
-    </mat-form-field>
-    <br/>
-
-    <div *ngIf="isLecturerRegistration">
-      <mat-form-field appearance="fill">
-        <mat-label>שם הקורס:</mat-label>
-        <input matInput id="courseName" [(ngModel)]="courseName" name="courseName" />
-      </mat-form-field>
-    </div>
-    <br/>
-    <button mat-raised-button color="primary" type="submit">הירשם</button>
-  </form>
-
-  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
-</div>
- -->

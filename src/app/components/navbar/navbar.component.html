@@ -1,4 +1,4 @@
-
+<!-- 
   <nav class="navbar">
   <ul>
     <div *ngIf="(isAuthenticated$ | async)">
@@ -12,4 +12,66 @@
     <li><a [routerLink]="'add-courses'">Add Course</a></li> 
     <li><a (click)="onLogout()">Log Out</a></li>
   </ul>
+</nav> --><nav class="navbar">
+  <!-- תצוגת שם המשתמש -->
+  <!-- <div *ngIf="(isAuthenticated$ | async)">
+    <div *ngIf="(username$ | async) as username">
+      <span class="username-initial">{{ username[0] || '' }}</span>
+    </div>
+  </div>
+  
+  <!-- תפריט ניווט -->
+  <!-- <ul class="navbar-menu">
+    <li><a [routerLink]="'login'">Login</a></li>
+    <li><a [routerLink]="'register'">Register</a></li>
+    <li><a [routerLink]="'all-courses'">All Courses</a></li>
+    <li><a [routerLink]="'add-courses'">Add Course</a></li>
+    <li><a (click)="onLogout()" class="logout">Log Out</a></li>
+  </ul>
+
+  <!-- כפתור התפריט למסכים קטנים -->
+  <!-- <div class="menu-button" (click)="toggleMenu()">☰</div> -->
+  
+  <!-- תפריט נפתח למסכים קטנים -->
+  <!-- <ul class="dropdown-menu" [ngClass]="{'show': isMenuOpen}">
+    <li><a [routerLink]="'login'">Login</a></li>
+    <li><a [routerLink]="'register'">Register</a></li>
+    <li><a [routerLink]="'all-courses'">All Courses</a></li>
+    <li><a [routerLink]="'add-courses'">Add Course</a></li>
+    <li><a (click)="onLogout()">Log Out</a></li>
+  </ul>
+</nav>  -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- תצוגת שם המשתמש -->
+    <div *ngIf="(isAuthenticated$ | async)" class="username-container">
+      <div *ngIf="(username$ | async) as username">
+        <span class="username-initial">{{ username[0] || '' }}</span>
+      </div>
+    </div>
+    
+    <!-- תפריט ניווט -->
+    <ul class="navbar-menu">
+      <li><a [routerLink]="'login'">Login</a></li>
+      <li><a [routerLink]="'register'">Register</a></li>
+      <li><a [routerLink]="'all-courses'">All Courses</a></li>
+      <li><a [routerLink]="'add-courses'">Add Course</a></li>
+      <li><a (click)="onLogout()" class="logout">Log Out</a></li>
+    </ul>
+    
+    <!-- כפתור התפריט למסכים קטנים -->
+
+    <div class="menu-button" (click)="toggleMenu()">☰ Menu</div>
+  </div>
+  
+  <!-- תפריט נפתח למסכים קטנים -->
+<ul class="dropdown-menu" [ngClass]="{'show': isMenuOpen}">
+  <li><a [routerLink]="'login'" (click)="closeMenu()">Login</a></li>
+  <li><a [routerLink]="'register'" (click)="closeMenu()">Register</a></li>
+  <li><a [routerLink]="'all-courses'" (click)="closeMenu()">All Courses</a></li>
+  <li><a [routerLink]="'add-courses'" (click)="closeMenu()">Add Course</a></li>
+  <li><a (click)="onLogout(); closeMenu()">Log Out</a></li>
+</ul>
+
+  
 </nav>

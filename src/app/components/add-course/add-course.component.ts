@@ -50,7 +50,7 @@ export class AddCourseComponent implements OnInit {
       startDate: [null, Validators.required],
       syllabus: this.fb.array([]),
       learningMode: ['', Validators.required],
-      image: [''],
+      image: ['',Validators.required],
       lecturerCode: ['', Validators.required],
       lecturerName: [{ value: '', disabled: true }] // Disabled input for lecturer name
     });

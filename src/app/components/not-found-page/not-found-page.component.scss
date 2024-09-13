@@ -1,0 +1,31 @@
+/* הסטיילים עבור הקומפוננטה */
+.not-found-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+    background-color: #f8f8f8; /* צבע רקע בהיר */
+    color: #333; /* צבע טקסט */
+    text-align: center;
+  }
+  
+  .not-found-content {
+    background-color: #fff; /* רקע לבן לתוכן */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .error-code {
+    font-size: 80px;
+    color: #e91e63; /* צבע ורוד */
+    margin: 0;
+
+  }
+  
+  .error-message {
+    font-size: 24px;
+    color: #333;
+    margin: 10px 0;
+  }
+  

@@ -9,18 +9,24 @@
 }
 
 .course-image-container {
-  flex: 0 0 150px;
-  margin-right: 16px;
+  flex: 0 0 150px; /* נשאר באותו גודל לקונטיינר */
+  margin-right: 24px; /* רווח מוגדל בין התמונה לטקסט */
+  margin-left: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .course-image {
-  width: 100%;
-  height: auto;
+  width: 120%; /* הגדלת התמונה מבלי לשנות את הקונטיינר */
+  height: 120%;
+  object-fit: cover; /* התמונה תכסה את השטח ותשמור על פרופורציות */
   border-radius: 8px;
 }
 
 .course-details-container {
   flex: 1;
+  padding-left: 16px; /* מוסיף רווח בין התמונה לפרטים */
 }
 
 .course-category {
@@ -59,8 +65,75 @@
   padding-left: 20px;
   margin: 8px 0;
 }
+
 .highlighted-card {
   border: 2px solid #e91e63;
   background-color: #fbeef4;
-  
 }
+
+// .course-card {
+//   display: flex;
+//   align-items: flex-start;
+//   border: 1px solid #ddd;
+//   border-radius: 8px;
+//   padding: 16px;
+//   margin-bottom: 16px;
+//   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+// }
+
+// .course-image-container {
+//   flex: 0 0 150px;
+//   margin-right: 16px;
+// }
+
+// .course-image {
+//   width: 100%;
+//   height: auto;
+//   border-radius: 8px;
+// }
+
+// .course-details-container {
+//   flex: 1;
+// }
+
+// .course-category {
+//   display: flex;
+//   align-items: center;
+//   margin-bottom: 8px;
+// }
+
+// .category-icon {
+//   width: 60px;
+//   height: 60px;
+//   margin-right: 8px;
+//   border-radius: 50%;
+// }
+
+// .category-name {
+//   font-size: 1.2em;
+//   font-weight: bold;
+// }
+
+// .course-details {
+//   margin-top: 16px;
+// }
+
+// .course-details h2 {
+//   margin-top: 0;
+//   margin-bottom: 8px;
+//   font-size: 1.5em;
+// }
+
+// .course-details p {
+//   margin: 4px 0;
+// }
+
+// .course-details ul {
+//   padding-left: 20px;
+//   margin: 8px 0;
+// }
+// .highlighted-card {
+//   border: 2px solid #e91e63;
+//   background-color: #fbeef4;
+  
+// }

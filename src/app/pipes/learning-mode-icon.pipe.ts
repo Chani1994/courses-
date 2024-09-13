@@ -8,12 +8,12 @@ import { LearningMethod } from '../models/course.model';
 })
 export class LearningModeIconPipe implements PipeTransform {
   transform(learningMode: LearningMethod): string {
-    console.log('learningMode:', learningMode); // הוסף בדיקה זו
+    console.log('learningMode:', learningMode);    
     switch (learningMode) {
       case 'In-Person':
-        return ' פרונטלי 🧑‍🏫'; // אייקון פרונטלי
+        return ' In-Preson 🧑‍🏫';  
       case 'Zoom':
-        return 'זום 💻'; // אייקון זום
+        return 'Zoom 💻';  
       default:
         return '';
     }
