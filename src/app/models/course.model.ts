@@ -5,7 +5,6 @@ export enum LearningMethod {
   'In-Person'  = 'In-Person'
 
   }
-  
   export class Course {
     constructor(
       public courseCode: string,
@@ -16,6 +15,7 @@ export enum LearningMethod {
       public learningMethod: LearningMethod,
       public lecturerCode: string,
       public imagePath: string,
-      public category: Category // הקטגוריה
+      public categoryCode: string 
     ) {}
   }
+  

@@ -32,6 +32,8 @@ export class AddCourseComponent implements OnInit {
   lecturers: Lecturer[] = [];  // List of lecturers
   lecturerCodes: string[] = []; // Lecturer codes
   learningMethods: LearningMethod[] = []; // Learning methods data
+  selectedCategoryName: string = '';
+
   minDate: string = '';
 
   constructor(
@@ -45,7 +47,9 @@ export class AddCourseComponent implements OnInit {
     this.courseForm = this.fb.group({
       code: [{ value: '', readonly: true }],
       name: ['', Validators.required],
-      category: ['', Validators.required],
+      categoryCode: ['', Validators.required],
+      categoryName: [{ value: '', disabled: true }] ,// Disabled input for lecturer name
+
       numberOfLessons: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
       startDate: [null, Validators.required],
       syllabus: this.fb.array([]),
@@ -93,6 +97,16 @@ export class AddCourseComponent implements OnInit {
     );
   }
 
+  onCategoryChange(event: MatSelectChange): void {
+    const selectedCategoryCode = event.value;
+    const selectedCategory = this.categories.find(category => category.code === selectedCategoryCode);
+
+    if (selectedCategory) {
+      this.courseForm.get('categoryName')?.setValue(selectedCategory.name);
+    } else {
+      this.courseForm.get('categoryName')?.setValue('');
+    }
+  }
   loadLearningMethods(): void {
     this.learningMethodService.getAllLearningMethods().subscribe(
       (methods: LearningMethod[]) => { // Ensure methods parameter is typed
@@ -123,48 +137,42 @@ export class AddCourseComponent implements OnInit {
     if (selectedLecturer) {
       this.courseForm.get('lecturerName')?.setValue(selectedLecturer.name);
     } else {
-      // Clear the lecturer name if no lecturer is found
       this.courseForm.get('lecturerName')?.setValue('');
     }
   }
-
   onSubmit(): void {
     if (this.courseForm.valid) {
       // Filter out empty syllabus fields
       const syllabus = this.courseForm.get('syllabus')?.value.filter((field: string) => field.trim() !== '');
-
+  
       if (syllabus.length === 0) {
         Swal.fire('Error!', 'The syllabus cannot be empty.', 'error');
         return;
       }
-
+  
       const selectedCategoryCode = this.courseForm.get('category')?.value;
       const selectedCategory = this.categories.find(cat => cat.code === selectedCategoryCode);
-
+  
       if (!selectedCategory) {
         Swal.fire('Error!', 'The selected category is invalid.', 'error');
         return;
       }
-
+  
       // Convert startDate to Date object
       const startDate = new Date(this.courseForm.get('startDate')?.value);
-
+  
       const newCourse = new Course(
         this.courseForm.get('code')?.value,
         this.courseForm.get('name')?.value,
         +this.courseForm.get('numberOfLessons')?.value,
-        new Date(this.courseForm.value.startDate), // המרת מחרוזת לתאריך
+        startDate,
         syllabus,
-        this.courseForm.get('learningMode')?.value, // ודא שהערך הזה הוא 'In-Person'
+        this.courseForm.get('learningMode')?.value, // Ensure this value is 'In-Person' or 'Zoom'
         this.courseForm.get('lecturerCode')?.value,
         this.courseForm.get('image')?.value,
-        {
-          code: selectedCategory.code,
-          name: selectedCategory.name,
-          iconPath: selectedCategory.iconPath,
-        } as Category // Cast to Category type
+        selectedCategoryCode // Pass category code as a string
       );
-
+  
       this.courseService.addCourse(newCourse).subscribe(
         (response: any) => {
           console.log('Course added successfully', response);
@@ -175,7 +183,7 @@ export class AddCourseComponent implements OnInit {
         (error: HttpErrorResponse) => {
           console.error('Error adding course', error);
           console.error('Error response body:', error.error);
-
+  
           Swal.fire('Error!', 'Failed to add the course.', 'error');
         }
       );
@@ -184,6 +192,7 @@ export class AddCourseComponent implements OnInit {
       Swal.fire('Error!', 'Please fill out all required fields.', 'error');
     }
   }
+  
 
   setMinDate(): void {
     const today = new Date();

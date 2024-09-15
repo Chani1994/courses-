@@ -62,14 +62,12 @@ export class CourseService {
 
   constructor(private http: HttpClient) {}
 
-  // Method to get all courses, with optional token for authentication
-  getAllCourses(token?: string): Observable<Course[]> {
-    const headers = token ? new HttpHeaders({ 'Authorization': `Bearer ${token}` }) : new HttpHeaders();
-    return this.http.get<Course[]>(this.apiUrl, { headers }).pipe(
-      catchError(this.handleError<Course[]>('getAllCourses', []))
-    );
-  }
 
+  // קבלת כל הקורסים
+  getAllCourses(): Observable<Course[]> {
+    return this.http.get<Course[]>(this.apiUrl);
+    
+  }
   // Method to add a new course
   addCourse(courseData: Course): Observable<any> {
     return this.http.post<any>(this.apiUrl, courseData).pipe(
@@ -112,20 +110,6 @@ export class CourseService {
     );
   }
 
-  // בדיקת קורסי ברירת מחדל
-  // checkAndInitializeDefaultCourses(): Observable<void> {
-  //   return this.getAllCourses().pipe(
-  //     mergeMap(courses => {
-  //       if (courses.length === 0) {
-  //         return this.initializeCourses(this.defaultCourses).pipe(
-  //           map(() => undefined) // המרה של Observable<void[]> ל-Observable<void>
-  //         );
-  //       }
-  //       return of(undefined); // במקרה שיש כבר קורסים, חזור על Observable<void> ריק
-  //     }),
-  //     catchError(this.handleError<void>('checkAndInitializeDefaultCourses'))
-  //   );
-  // }
   
   // Method to initialize courses by posting them to the server
   initializeCourses(courses: Course[]): Observable<void[]> {

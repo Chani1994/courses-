@@ -66,7 +66,7 @@ export class UserService {
     const url = `${this.apiUrl}/${encodeURIComponent(username)}`;
     return this.http.get<User | null>(url).pipe(
       catchError(error => {
-        console.error('Error fetching user by username:', error);
+        // console.error('Error fetching user by username:', error);
         return of(null); // Return null if user not found
       })
     );
@@ -75,7 +75,7 @@ export class UserService {
   addUser(user: User): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}`, user).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.error('Error adding user:', error);
+        // console.error('Error adding user:', error);
         return throwError(error);
       })
     );

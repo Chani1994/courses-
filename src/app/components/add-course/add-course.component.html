@@ -13,15 +13,22 @@
     </mat-form-field>
   </div>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Category</mat-label>
-    <mat-select formControlName="category">
+
+   <div class="categoty-row">
+
+   <mat-form-field appearance="fill">
+    <mat-label>Category Code</mat-label>
+    <mat-select formControlName="categoryCode" (selectionChange)="onCategoryChange($event)">
       <mat-option *ngFor="let category of categories" [value]="category.code">
-        {{ category.name }}
+        {{ category.code }}
       </mat-option>
     </mat-select>
   </mat-form-field>
-  
+  <mat-form-field appearance="fill">
+    <mat-label>Category Name</mat-label>
+    <input matInput formControlName="categoryName" readonly>
+  </mat-form-field>
+   </div>
     <div class="lecturer-row">
       <mat-form-field appearance="fill">
         <mat-label>Lecturer Code</mat-label>

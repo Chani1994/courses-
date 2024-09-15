@@ -15,6 +15,8 @@ import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../../services/auth.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Category } from '../../models/category.model';
+import { CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'app-course-details',
@@ -29,33 +31,78 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./course-details.component.scss']
 })
 export class CourseDetailsComponent implements OnInit {
-  @Input() course$!: Observable<Course>; // התייחסות ל-Observable של קורס
+  course$: Observable<Course[]> | undefined;
+
   isLecturer$: Observable<boolean> = new Observable<boolean>(); // Observable עבור מצב המרצה
   currentUser$: Observable<User | null> = this.userService.getCurrentUser();
   isHighlighted: boolean = false;
   lecturerName: string = ''; 
   lecturer: Lecturer | null = null;
+  categoryName:string='';
+  category: Category | null=null; // נוסיף משתנה לאחסון הקטגוריה
   @Input() course!: Course;
+  courses: Course[] | undefined;
 
   constructor(
     public authService: AuthService,
     private userService: UserService,
     private courseService: CourseService,
     private lecturerService: LecturerService,  
+    private categoryService:CategoryService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    if (!this.course) {
-      console.error('Course is not defined');
+    this.course$ = this.courseService.getAllCourses(); // או כל מקור אחר
+
+    if (!this.course$) {
+      console.error('Course Observable is not defined.');
       return;
     }
 
-    this.checkIfHighlighted();
-    this.checkIfLecturer();
-    this.loadLecturerName();
+    this.course$.subscribe({
+      next: (courses) => {
+        console.log('Course from Observable:', courses);
+        this.courses = courses;
+        this.checkIfHighlighted();
+        this.checkIfLecturer();
+        this.loadLecturerName();
+        this.loadCategory();
+      },
+      error: (err) => {
+        console.error('Error subscribing to course Observable:', err);
+      }
+    });
   }
-
+  
+  
+  loadCategory(): void {
+    if (!this.course || !this.course.categoryCode) {
+      console.error('Category information is missing.');
+      return;
+    }
+  
+    console.log('Loading category with code:', this.course.categoryCode);
+  
+    this.categoryService.getCategoryByCode(this.course.categoryCode).subscribe(
+      (category: Category) => {
+        console.log('Received category:', category); // להוסיף לוג
+        if (!category) {
+          console.error('No category returned.');
+          return;
+        }
+        console.log('Category fetched:', category);
+        this.category = category;
+        this.categoryName = category.name || 'Unnamed Category'; // ניהול ברירת מחדל
+        console.log('Category icon path:', this.category?.iconPath);
+        console.log('Category name:', this.categoryName);
+      },
+      (error) => {
+        console.error('Error fetching category:', error);
+      }
+    );
+  }
+  
   checkIfHighlighted(): void {
     if (!this.course || !this.course.startDate) return;
 

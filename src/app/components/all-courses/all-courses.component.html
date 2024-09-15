@@ -4,85 +4,37 @@
   <div class="filter-container">
     <div class="filter-content">
       <mat-form-field appearance="fill">
-        <mat-label>חפש לפי שם</mat-label>
-        <input matInput (input)="onFilterChange('name', $event)" placeholder="חפש לפי שם" />
+        <mat-label>Search by name</mat-label>
+        <input matInput (input)="onFilterChange('courseName', $event)" placeholder="Search by name" />
       </mat-form-field>
+      
       <mat-form-field appearance="fill">
-        <mat-label>חפש לפי אופן הלמידה</mat-label>
+        <mat-label> Search by learning mode   </mat-label>
         <mat-select (selectionChange)="onFilterChange('learningMode', $event)">
-          <mat-option value="">חפש לפי אופן הלמידה</mat-option>
+          <mat-option value="">   Search by learning mode</mat-option>
           <mat-option *ngFor="let mode of learningModes" [value]="mode">{{ mode }}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field appearance="fill">
-        <mat-label>חפש לפי קטגוריה</mat-label>
-        <mat-select (selectionChange)="onFilterChange('category', $event)">
-          <mat-option value="">חפש לפי קטגוריה</mat-option>
-          <mat-option *ngFor="let category of categories" [value]="category.code">{{ category.name }}</mat-option>
+        <mat-label> Search by category </mat-label>
+        <mat-select 
+          (selectionChange)="onFilterChange('category', $event)" 
+          [disabled]="!isAuthenticated">
+          <mat-option value=""> Search by category </mat-option>
+          <mat-option *ngFor="let category of categories" [value]="category.code">
+            {{ category.name }}
+          </mat-option>
         </mat-select>
       </mat-form-field>
+      
+     
     </div>
   </div>
   
   <div class="course-list">
     <div *ngFor="let course of filteredCourses" class="course-tile">
       <app-course-details [course]="course"></app-course-details>
+
     </div>
   </div>
 
-
-
-<!-- <p>all-courses works!</p>
-<div *ngIf="!isAuthenticated" class="error-message">
-  <p>אופסססססס, אינך מחובר...</p>
-  <button (click)="goToLogin()">להתחברות לחץ כאן</button> //כפתור להתחברות -->
-<!-- </div>
-
-
-<div *ngIf="isAuthenticated">
-  <input type="text" (input)="onFilterChange('name', $event)" placeholder="חפש לפי שם" />
-  <br />
-  <select (change)="onFilterChange('category', $event)">
-    <option value="">חפש לפי קטגוריה</option>
-    <option *ngFor="let category of categories" [value]="category.code">{{ category.name }}</option>
-  </select>
-  <br />
-  <select (change)="onFilterChange('learningMode', $event)">
-    <option value="">חפש לפי אופן הלמידה</option>
-    <option *ngFor="let mode of learningModes" [value]="mode">{{ mode }}</option>
-  </select>
-  <br />
-
-  <div>
-    <app-course-details *ngFor="let course of filteredCourses" [course]="course"></app-course-details>
-  </div>
-</div> --> 
-
-<!-- <div *ngIf="isAuthenticated; else notAuthenticated"> -->
-  <!-- שדה חיפוש לפי שם -->
-  <!-- <input type="text" (input)="onFilterChange('name', $event)" placeholder="חפש לפי שם">
-  <br> -->
-  
-  <!-- תיבת בחירה לחיפוש לפי קטגוריה -->
-  <!-- <select (change)="onFilterChange('category', $event)">
-    <option value="">חפש לפי קטגוריה</option>
-    <option *ngFor="let category of categories" [value]="category.code">{{ category.name }}</option>
-  </select>
-  <br> -->
-
-  <!-- תיבת בחירה לחיפוש לפי אופן הלמידה -->
-  <!-- <select (change)="onFilterChange('learningMode', $event)">
-    <option value="">חפש לפי אופן הלמידה</option>
-    <option *ngFor="let mode of learningModes" [value]="mode">{{ mode }}</option>
-  </select>
-  
-  <div> -->
-    <!-- הצגת פרטי הקורסים -->
-    <!-- <app-course-details *ngFor="let course of filteredCourses" [course]="course"></app-course-details>
-  </div>
-</div> -->
-
-<!-- תבנית חלופית כאשר המשתמש אינו מחובר -->
-<!-- <ng-template #notAuthenticated>
-  <p>אופסססססס, אינך מחובר...</p>
-</ng-template> -->

@@ -140,10 +140,8 @@ performLogin(): void {
           });
           const updatedUser = this.authService.getCurrentUser();
 
-          // הוסף כאן רענון של המידע הנוכחי
           this.authService.refreshCurrentUser();  
           
-          // המתן מספר שניות כדי לאפשר למידע להתעדכן לפני המעבר
           setTimeout(() => {
             this.router.navigate(['/all-courses']);  // העבר לקומפוננטת כל הקורסים
           }, 1000);  // המתן שנייה לפני המעבר

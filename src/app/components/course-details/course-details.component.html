@@ -8,12 +8,16 @@
 
   <div class="course-details-container">
     <!-- הצגת שדות הקטגוריה רק אם המשתמש מחובר -->
-    <ng-container *ngIf="authService.isAuthenticated()">
-      <div class="course-category">
-        <img [src]="course.category.iconPath" alt="Category Icon" class="category-icon" />
-        <span class="category-name">{{ course.category.name }}</span>
+   
+    <ng-container *ngIf="authService.isAuthenticated() && category">
+      <div *ngIf="category" class="course-category">
+        <img *ngIf="category.iconPath" [src]="category.iconPath" alt="{{ categoryName }} icon" class="category-icon"/>
+
+        <span class="category-name">{{ categoryName }}</span>
       </div>
+      
     </ng-container>
+    
 
     <div class="course-details">
       <h2 class="course-name">{{ course.courseName }}</h2>

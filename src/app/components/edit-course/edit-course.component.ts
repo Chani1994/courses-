@@ -14,32 +14,30 @@ import { LearningMethodService } from '../../services/learning-method.service';
 import { forkJoin } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+
 @Component({
   selector: 'app-edit-course',
   templateUrl: './edit-course.component.html',
   styleUrls: ['./edit-course.component.scss'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatButtonModule,
-    MatIconModule],
+  imports: [
+    ReactiveFormsModule, CommonModule, MatFormFieldModule,
+    MatInputModule, MatSelectModule, MatDatepickerModule,
+    MatNativeDateModule, MatButtonModule, MatIconModule
+  ],
 })
 export class EditCourseComponent implements OnInit {
   course!: Course;
   minDate: string = '';
-
   courseForm: FormGroup = new FormGroup({});
   categories: Category[] = [];
   lecturerCodes: Lecturer[] = [];
-  courseId: string = ''; // השתנה ל-ID של הקורס
+  courseId: string = '';
   selectedCategory?: Category;
   learningMethods: LearningMethod[] = [];
   selectedLearningMethod?: LearningMethod;
@@ -54,13 +52,12 @@ export class EditCourseComponent implements OnInit {
     private router: Router
   ) {
     this.initForm();
-    this.setMinDate(); // קריאה לפונקציה לקביעת תאריך המינימום
-
+    this.setMinDate();
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.courseId = params['id']; 
+      this.courseId = params['id'];
       if (this.courseId) {
         this.loadInitialData();
       } else {
@@ -75,78 +72,61 @@ export class EditCourseComponent implements OnInit {
       this.setSyllabus(state.course.syllabus || []);
       this.setLecturerName(state.course.lecturerCode);
     }
-  
-    if (this.course && this.course.category) {
-      this.selectedCategory = this.categories.find(cat => cat.code === this.course.category.code);
-      this.courseForm.get('category')?.setValue(this.selectedCategory?.code || '');
+
+    if (this.course && this.course.categoryCode) {
+      this.selectedCategory = this.categories.find(cat => cat.code === this.course.categoryCode);
+      this.courseForm.get('categoryCode')?.setValue(this.selectedCategory?.code || '');
     }
   }
-  
-  onCategoryChange(event: any): void {
-    const selectedCategoryCode = event.target.value;
-    this.selectedCategory = this.categories.find(cat => cat.code === selectedCategoryCode);
-    this.courseForm.get('category')?.setValue(selectedCategoryCode);
-  }
- 
+
   loadInitialData(): void {
     forkJoin({
       categories: this.categoryService.getCategories(),
       learningMethods: this.learningMethodService.getAllLearningMethods(),
       course: this.courseService.getCourseById(this.courseId),
-      lecturers: this.lecturerService.getAllLecturers() // הוסף את זה כדי לטעון את כל המרצים
+      lecturers: this.lecturerService.getAllLecturers()
     }).subscribe(
       ({ categories, learningMethods, course, lecturers }) => {
         this.categories = categories;
         this.learningMethods = learningMethods;
         this.course = course;
-        this.lecturerCodes = lecturers; // שמור את המרצים שנטענו
-  
+        this.lecturerCodes = lecturers;
+
         this.courseForm.patchValue({
           courseCode: course.courseCode,
-          name: course.courseName,
-          category: course.category ? course.category.code : '', 
+          courseName: course.courseName,
+          categoryCode: course.categoryCode,
           numberOfLessons: course.numberOfLessons,
           startDate: this.formatDate(course.startDate),
           syllabus: course.syllabus,
           learningMethod: course.learningMethod,
           image: course.imagePath,
-          lecturerCode: course.lecturerCode // עדכן את השדה של קוד המרצה
+          lecturerCode: course.lecturerCode
         });
-  
+
         this.setSyllabus(course.syllabus || []);
-  
-        if (course.category) {
-          this.selectedCategory = this.categories.find(cat => cat.code === course.category.code) || undefined;
-          this.courseForm.get('category')?.setValue(this.selectedCategory ? this.selectedCategory.code : '');
-        }
-  
-        if (course.learningMethod) {
-          this.selectedLearningMethod = this.learningMethods.find(method => method === course.learningMethod) || undefined;
-          this.courseForm.get('learningMethod')?.setValue(this.selectedLearningMethod ? this.selectedLearningMethod : '');
-        }
-  
-        if (course.lecturerCode) {
-          this.setLecturerName(course.lecturerCode); // עדכן את שם המרצה אם יש קוד מרצה
-        }
+        this.setCategoryName(course.categoryCode);
+        this.setLecturerName(course.lecturerCode);
       },
       (error) => {
         console.error('Error loading initial data:', error);
       }
     );
   }
-  
+
   initForm(): void {
     this.courseForm = this.fb.group({
       courseCode: ['', Validators.required],
-      name: ['', Validators.required],
-      category: ['', Validators.required], // Ensure this is a form control
+      courseName: ['', Validators.required],
+      categoryCode: ['', Validators.required],
+      categoryName: [{ value: '', disabled: true }],
       lecturerCode: ['', Validators.required],
       lecturerName: [{ value: '', disabled: true }],
       numberOfLessons: ['', Validators.required],
       startDate: ['', Validators.required],
       syllabus: this.fb.array([]),
-      learningMethod: ['', Validators.required], 
-      image: ['']
+      learningMethod: ['', Validators.required],
+      image: ['',Validators.required]
     });
   }
 
@@ -166,6 +146,7 @@ export class EditCourseComponent implements OnInit {
       return '';
     }
   }
+
   setMinDate(): void {
     const today = new Date();
     const year = today.getFullYear();
@@ -173,6 +154,7 @@ export class EditCourseComponent implements OnInit {
     const day = String(today.getDate()).padStart(2, '0');
     this.minDate = `${year}-${month}-${day}`;
   }
+
   setSyllabus(syllabus: string[]): void {
     const syllabusFormArray = this.courseForm.get('syllabus') as FormArray;
     syllabusFormArray.clear();
@@ -187,7 +169,20 @@ export class EditCourseComponent implements OnInit {
       this.courseForm.get('lecturerName')?.setValue(lecturer.name);
     }
   }
-
+  setCategoryName(categoryCode: string): void {
+    if (categoryCode) {
+      this.categoryService.getCategoryByCode(categoryCode).subscribe(
+        (category) => {
+          this.courseForm.get('categoryName')?.setValue(category?.name || '');
+        },
+        (error) => {
+          console.error('Error loading category name:', error);
+        }
+      );
+    } else {
+      this.courseForm.get('categoryName')?.setValue('');
+    }
+  }
   get syllabus(): FormArray {
     return this.courseForm.get('syllabus') as FormArray;
   }
@@ -199,35 +194,31 @@ export class EditCourseComponent implements OnInit {
   removeSyllabusField(index: number): void {
     this.syllabus.removeAt(index);
   }
-
-  onLecturerCodeChange(event: any): void {
-    const selectedCode = event.target.value;
+   
+    onCategoryCodeChange(event: MatSelectChange): void {
+      const selectedCategoryCode = event.value;
+      this.setCategoryName(selectedCategoryCode);
+    }
+  onLecturerCodeChange(event: MatSelectChange): void {
+    const selectedCode = event.value;
     this.setLecturerName(selectedCode);
   }
 
   onSubmit(): void {
     if (this.courseForm.valid) {
       const syllabus = this.courseForm.get('syllabus')?.value.filter((field: string) => field.trim() !== '');
-  
+
       if (syllabus.length === 0) {
         Swal.fire('Error!', 'The syllabus cannot be empty.', 'error');
         return;
       }
-  
+
       const updatedCourse = {
         ...this.courseForm.value,
         syllabus: syllabus,
-        courseCode: this.courseId, // Ensure this is correct
-        category: this.selectedCategory ? {
-          code: this.selectedCategory.code,
-          name: this.selectedCategory.name,
-          iconPath: this.selectedCategory.iconPath
-        } : null,
+        categoryCode: this.selectedCategory ? this.selectedCategory.code : '',
       };
-  
-      console.log('Form value:', this.courseForm.value);
-      console.log('Updated Course:', updatedCourse);
-  
+
       this.courseService.updateCourse(updatedCourse).subscribe({
         next: () => {
           Swal.fire({
@@ -239,7 +230,7 @@ export class EditCourseComponent implements OnInit {
           });
         },
         error: (error: HttpErrorResponse) => {
-          console.error('Error occurred while updating course:', error); // Add logging
+          console.error('Error occurred while updating course:', error);
           Swal.fire({
             icon: 'error',
             title: 'Update failed',
@@ -257,9 +248,8 @@ export class EditCourseComponent implements OnInit {
       });
     }
   }
-  
+
   cancel(): void {
     this.router.navigate(['/all-courses']);
   }
 }
-

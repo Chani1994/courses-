@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Category } from '../models/category.model';
+import { Course } from '../models/course.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,30 +16,16 @@ export class CategoryService {
   // קבלת כל הקטגוריות
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(this.apiUrl).pipe(
-      // tap(categories => {
-      //   // if (categories.length === 0) {
-      //   //   // הוספה לשרת אם אין קטגוריות - התאמה לפי הצורך
-      //   //   this.addDefaultCategories();
-      //   // }
-      // }),
       catchError(this.handleError<Category[]>('getCategories', []))
     );
   }
+//קבלת קטגוריה לפי קוד קטגוריה
+getCategoryByCode(categoryCode: string): Observable<Category> {
+  const url = `${this.apiUrl}/${categoryCode}`; // ודא שהURL נכון
+  return this.http.get<Category>(url);
+}
 
-  // פונקציה להוספת קטגוריות ברירת מחדל
-  // private addDefaultCategories() {
-  //   const defaultCategories: Category[] = [
-  //     { code: '001', name: 'Teaching', iconPath: 'assets/images/teach-1968076_1280.jpg' },
-  //     { code: '002', name: 'Creation and Art', iconPath: 'assets/images/hand-4752642_1280.jpg' },
-  //     { code: '003', name: 'Computers', iconPath: 'assets/images/pexels-pixabay-38568.jpg' },
-  //     { code: '004', name: 'Medicine', iconPath: 'assets/images/syringes-3539565_1280.jpg' },
 
-  //   ];
-    
-  //   defaultCategories.forEach(category => {
-  //     this.addCategory(category).subscribe(); // הוספה של כל קטגוריה ברירת מחדל
-  //   });
-  // }
 
   // הוספת קטגוריה חדשה
   addCategory(category: Category): Observable<Category> {
