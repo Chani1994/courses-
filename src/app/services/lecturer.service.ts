@@ -7,7 +7,7 @@ import { Lecturer } from '../models/lecturer.model';
   providedIn: 'root'
 })
 export class LecturerService {
-  private apiUrl = 'http://localhost:3000/lecturers'; // כתובת ה-API שלך
+  private apiUrl = 'http://localhost:3000/lecturers'; 
 
   constructor(private http: HttpClient) { }
 
@@ -23,7 +23,7 @@ export class LecturerService {
     return this.http.get<Lecturer>(`${this.apiUrl}/${lecturerId.trim()}`).pipe(
       catchError((error) => {
         console.error('Error fetching lecturer:', error);
-        return of(null); // תחזיר null או כל ערך אחר שמתאים לטיפול בשגיאה
+        return of(null); 
       })
     );
   }

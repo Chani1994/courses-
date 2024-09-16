@@ -1,6 +1,4 @@
-
-  
-  import { Component, OnInit, OnDestroy } from '@angular/core';
+  import { Component, OnInit, OnDestroy, Input } from '@angular/core';
   import { Course, LearningMethod } from '../../models/course.model';
   import { CourseService } from '../../services/course.service';
   import { CourseDetailsComponent } from '../course-details/course-details.component';
@@ -10,27 +8,30 @@
   import { AuthService } from '../../services/auth.service';
   import { Router } from '@angular/router';
   import { HttpClientModule } from '@angular/common/http';
-  import { Subscription } from 'rxjs';
+  import { Observable, Subscription } from 'rxjs';
   import { MatFormFieldModule } from '@angular/material/form-field';
   import { MatInputModule } from '@angular/material/input';
   import { MatSelectChange, MatSelectModule } from '@angular/material/select';
   import { MatGridListModule } from '@angular/material/grid-list';
   import { MatButtonModule } from '@angular/material/button';
+import { LearningModeIconPipe } from "../../pipes/learning-mode-icon.pipe";
   
   @Component({
     selector: 'app-all-courses',
     standalone: true,
     imports: [CourseDetailsComponent, CommonModule, HttpClientModule, MatFormFieldModule,
-      MatInputModule,
-      MatSelectModule,
-      MatGridListModule,
-      MatButtonModule],
+    MatInputModule,
+    MatSelectModule,
+    MatGridListModule,
+    MatButtonModule, LearningModeIconPipe],
     templateUrl: './all-courses.component.html',
     styleUrls: ['./all-courses.component.scss']
   })
   export class AllCoursesComponent implements OnInit, OnDestroy {
     isAuthenticated: boolean = false;
     private authSubscription!: Subscription;
+    @Input() course!: Course;
+    course$: Observable<Course[]> | undefined;
     courses: Course[] = [];
     filteredCourses: Course[] = [];
     categories: Category[] = [];
@@ -42,6 +43,7 @@
     };
     selectedCategoryCode: string = '';
   
+
     constructor(
       public authService: AuthService,
       private courseService: CourseService,
@@ -52,9 +54,22 @@
     ngOnInit(): void {
       this.isAuthenticated = this.authService.isAuthenticated();
       this.loadCourses();
-      this.loadCategories();
-    }
+      this.loadCategories();  this.course$ = this.courseService.getAllCourses(); // או כל מקור אחר
   
+      if (!this.course$) {
+        console.error('Course Observable is not defined.');
+        return;
+      }
+  
+      this.course$.subscribe({
+        next: (courses) => {
+          console.log('Course from Observable:', courses);
+          this.courses = courses;
+        },
+        
+      });
+    }
+   
     ngOnDestroy(): void {
       if (this.authSubscription) {
         this.authSubscription.unsubscribe();
@@ -116,9 +131,15 @@
       console.log('Filtered courses:', this.filteredCourses);
     }
   
-    goToLogin() {
-      this.router.navigate(['/login']);
+    getLearningMethodEnum(value: string): LearningMethod {
+      if (Object.values(LearningMethod).includes(value as LearningMethod)) {
+        return value as LearningMethod;
+      }
+      return LearningMethod['In-Person']; // ערך ברירת מחדל במידה ואין התאמה
     }
+    // goToLogin() {
+    //   this.router.navigate(['/login']);
+    // }
   }
   
 

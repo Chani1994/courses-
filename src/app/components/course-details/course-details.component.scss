@@ -1,77 +1,298 @@
-.course-card {
-  display: flex;
-  align-items: flex-start;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 16px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
+// /* עיצוב כרטיס הקורס */
+// .course-card {
+//   display: flex;
+//   align-items: flex-start;
+//   border: 1px solid #ddd;
+//   border-radius: 8px;
+//   padding: 16px;
+//   margin-bottom: 16px;
+//   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+//   background-color: #fff;
+//   color: #444343;
+//   height: 300px; /* גובה קבוע לכרטיס */
+//   overflow: hidden; /* מונע גלילה פנימית */
+//   position: relative; /* להנחת התמונה עם פוזיציה אבסולוטית */
+// }
 
-.course-image-container {
-  flex: 0 0 150px; /* נשאר באותו גודל לקונטיינר */
-  margin-right: 24px; /* רווח מוגדל בין התמונה לטקסט */
-  margin-left: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+// /* קונטיינר התמונה */
+// .course-image-container {
+//   flex: 0 0 150px; /* גודל קבוע לתמונה */
+//   margin-right: 24px; /* רווח מוגדל בין התמונה לפרטי הקורס */
+//   margin-left: 5px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
 
-.course-image {
-  width: 120%; /* הגדלת התמונה מבלי לשנות את הקונטיינר */
-  height: 120%;
-  object-fit: cover; /* התמונה תכסה את השטח ותשמור על פרופורציות */
-  border-radius: 8px;
-}
+// /* עיצוב התמונה */
+// .course-image {
+//   width: 100%; /* מתאימה למיכל */
+//   height: auto; /* שומרת על פרופורציות */
+//   object-fit: cover; /* התמונה תכסה את כל השטח המוקצה לה */
+//   border-radius: 8px;
+// }
 
+/* קונטיינר פרטי הקורס */
 .course-details-container {
-  flex: 1;
-  padding-left: 16px; /* מוסיף רווח בין התמונה לפרטים */
+  flex: 1; /* תופס את השטח הנותר בכרטיס */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* פיזור התוכן בצורה אחידה */
 }
-h2{
-  font-weight: 600;
-}
+
+/* קונטיינר קטגוריה */
 .course-category {
   display: flex;
   align-items: center;
   margin-bottom: 8px;
 }
 
+/* אייקון קטגוריה */
 .category-icon {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   margin-right: 8px;
   border-radius: 50%;
 }
 
+/* שם הקטגוריה */
 .category-name {
   font-size: 1.2em;
   font-weight: bold;
 }
 
+/* פרטי הקורס */
 .course-details {
   margin-top: 16px;
 }
 
-.course-details h2 {
-  margin-top: 0;
-  margin-bottom: 8px;
-  font-size: 1.5em;
-}
-
+/* עיצוב פרטי הקורס */
 .course-details p {
   margin: 4px 0;
+  font-size: 18px; /* גודל טקסט אחיד */
 }
 
+/* רשימת סילבוס */
 .course-details ul {
   padding-left: 20px;
   margin: 8px 0;
 }
 
-.highlighted-card {
-  border: 2px solid #e91e63;
-  background-color: #fbeef4;
+/* כרטיס מודגש */
+.highlighted-card .start-in-a-week {
+ color: #ba0076;
+ font-size: 20px;
 }
+
+ 
+/* מדיה רספונסיבית */
+@media (max-width: 1200px) {
+  .course-card {
+    height: auto; /* גובה גמיש למסכים בינוניים */
+  }
+}
+
+@media (max-width: 600px) {
+  .course-card {
+    height: auto; /* גובה גמיש למסכים קטנים */
+  }
+
+  .course-image-container {
+    flex: 0 0 150px; /* גודל התמונה במסכים קטנים */
+  }
+
+  .category-icon {
+    width: 60px; /* גודל אייקון קטן יותר למסכים קטנים */
+    height: 60px;
+  }
+
+  .category-name {
+    font-size: 1em; /* גודל טקסט קטן יותר למסכים קטנים */
+  }
+
+  .course-details p {
+    font-size: 16px; /* גודל טקסט קטן יותר למסכים קטנים */
+  }
+}
+
+// /* כרטיס הקורס */
+// .course-card {
+//   display: flex;
+//   align-items: flex-start;
+//   // border: 1px solid #ddd;
+//   // border-radius: 8px;
+//   padding: 16px;
+//   // margin-bottom: 16px;
+//   // box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+//   background-color: #fff;
+//   color: #444343;
+//   // height: auto; /* מתאימים את הגובה לפי התוכן */
+//   // transition: background-color 0.3s ease; /* הוספת אפקט מעבר לצביעה */
+// }
+
+// // /* קונטיינר התמונה */
+// // .course-image-container {
+// //   flex: 0 0 200px; /* גודל התמונה */
+// //   margin-right: 24px;
+// //   display: flex;
+// //   justify-content: center;
+// //   align-items: center;
+// // }
+
+// // .course-image {
+// //   width: 100%;
+// //   height: 100%;
+// //   object-fit: cover; /* כיסוי של כל השטח */
+// //   border-radius: 8px;
+// // }
+
+// /* קונטיינר פרטי הקורס */
+// .course-details-container {
+//   flex: 1; /* תופס את כל השטח הזמין */
+//   max-width: 1200px; /* מקסימום רוחב */
+//   // margin: 0 auto; /* ממרכז את התוכן במסכים רחבים */
+//   // box-sizing: border-box; /* מבטיח שאין גלילה אופקית */
+// }
+
+// /* פרטי הקורס */
+// .course-details {
+//   margin-top: 16px;
+// }
+
+// // /* כותרת פרטי הקורס */
+// // .course-details h2 {
+// //   margin-top: 0;
+// //   margin-bottom: 8px;
+// //   font-weight: 500;
+// //   font-size: 20px; /* מתאים לגובה הכרטיס */
+// // }
+
+// /* פריטי מידע */
+// .course-details p {
+//   margin: 4px 0;
+//   font-size: 18px;
+// }
+
+// /* רשימת תוכן סילבוס */
+// .course-details ul {
+//   padding-left: 20px;
+//   margin: 8px 0;
+// }
+
+// /* קטגוריה */
+// .course-category {
+//   display: flex;
+//   align-items: center;
+//   margin-bottom: 8px;
+// }
+
+// .category-icon {
+//   width: 80px;
+//   height: 80px;
+//   margin-right: 8px;
+//   border-radius: 50%;
+// }
+
+// .category-name {
+//   font-size: 1.2em;
+//   font-weight: bold;
+// }
+
+// /* כרטיס מודגש */
+// .highlighted-card {
+//   background-color: #fbeef4;
+//   border: 2px solid #e91e63; /* מסגרת צבעונית */
+// }
+
+// /* סטיילינג למצב רספונסיבי */
+// @media (max-width: 1200px) {
+//   .course-details-container {
+//     max-width: 100%; /* הכרטיס יתפוס את כל הרוחב במסכים בינוניים */
+//   }
+// }
+
+// @media (max-width: 600px) {
+//   .course-details-container {
+//     max-width: 100%; /* הכרטיס יתפוס את כל הרוחב במסכים קטנים */
+//   }
+
+//   .course-image-container {
+//     flex: 0 0 150px; /* גודל התמונה במסכים קטנים */
+//   }
+
+//   .course-details h2 {
+//     font-size: 18px; /* גודל כותרת קטן יותר למסכים קטנים */
+//   }
+
+//   .course-details p {
+//     font-size: 16px; /* גודל טקסט קטן יותר למסכים קטנים */
+//   }
+  
+  
+// }
+
+
+
+// .course-card {
+//   display: flex;
+//   align-items: flex-start;
+ 
+// }
+
+// .course-image-container {
+//   flex: 0 0 150px; /* נשאר באותו גודל לקונטיינר */
+//   margin-right: 24px; /* רווח מוגדל בין התמונה לטקסט */
+//   margin-left: 5px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
+
+// .course-image {
+//   width: 1300%; /* הגדלת התמונה מבלי לשנות את הקונטיינר */
+//   height: 1300%;
+//   object-fit: cover; /* התמונה תכסה את השטח ותשמור על פרופורציות */
+//   border-radius: 8px;
+// }
+
+// .course-details-container {
+//   flex: 1;
+// }
+
+// .course-category {
+//   display: flex;
+//   align-items: center;
+//   margin-bottom: 8px;
+// }
+
+// .category-icon {
+//   width: 80px;
+//   height: 80px;
+//   margin-right: 8px;
+//   border-radius: 50%;
+// }
+
+// .category-name {
+//   font-size: 1.2em;
+//   font-weight: bold;
+// }
+
+// .course-details {
+//   margin-top: 16px;
+// }
+
+
+
+// .course-details p {
+//   margin: 4px 0;
+// }
+
+// .course-details ul {
+//   padding-left: 20px;
+//   margin: 8px 0;
+// }
+
+
 
 // .course-card {
 //   display: flex;
@@ -84,20 +305,28 @@ h2{
 // }
 
 // .course-image-container {
-//   flex: 0 0 150px;
-//   margin-right: 16px;
+//   flex: 0 0 150px; /* נשאר באותו גודל לקונטיינר */
+//   margin-right: 24px; /* רווח מוגדל בין התמונה לטקסט */
+//   margin-left: 5px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
 // }
 
 // .course-image {
-//   width: 100%;
-//   height: auto;
+//   width: 120%; /* הגדלת התמונה מבלי לשנות את הקונטיינר */
+//   height: 120%;
+//   object-fit: cover; /* התמונה תכסה את השטח ותשמור על פרופורציות */
 //   border-radius: 8px;
 // }
 
 // .course-details-container {
 //   flex: 1;
+//   padding-left: 16px; /* מוסיף רווח בין התמונה לפרטים */
 // }
-
+// h2{
+//   font-weight: 600;
+// }
 // .course-category {
 //   display: flex;
 //   align-items: center;
@@ -134,8 +363,9 @@ h2{
 //   padding-left: 20px;
 //   margin: 8px 0;
 // }
+
 // .highlighted-card {
 //   border: 2px solid #e91e63;
 //   background-color: #fbeef4;
-  
 // }
+

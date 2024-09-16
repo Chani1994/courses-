@@ -8,7 +8,6 @@ import { CommonModule } from '@angular/common';
 import { Category } from '../../models/category.model';
 import { Lecturer } from '../../models/lecturer.model';
 import { Course, LearningMethod } from '../../models/course.model';
-import Swal from 'sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LearningMethodService } from '../../services/learning-method.service';
 import { forkJoin } from 'rxjs';
@@ -19,6 +18,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-edit-course',
@@ -55,29 +56,56 @@ export class EditCourseComponent implements OnInit {
     this.setMinDate();
   }
 
-  ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.courseId = params['id'];
-      if (this.courseId) {
-        this.loadInitialData();
-      } else {
-        console.error('Course ID is missing');
-      }
-    });
+  // ngOnInit(): void {
+  //   this.route.params.subscribe(params => {
+  //     this.courseId = params['id'];
+  //     if (this.courseId) {
+  //       this.loadInitialData();
+  //     } else {
+  //       console.error('Course ID is missing');
+  //     }
+  //   });
   
-    const navigation = this.router.getCurrentNavigation();
-    const state = navigation?.extras.state as { course: Course };
-    if (state && state.course) {
-      this.courseForm.patchValue(state.course);
-      this.setSyllabus(state.course.syllabus || []);
-      this.setLecturerName(state.course.lecturerCode);
-    }
+  //   const navigation = this.router.getCurrentNavigation();
+  //   const state = navigation?.extras.state as { course: Course };
+  //   if (state && state.course) {
+  //     this.courseForm.patchValue(state.course);
+  //     this.setSyllabus(state.course.syllabus || []);
+  //     this.setLecturerName(state.course.lecturerCode);
+  //   }
 
-    if (this.course && this.course.categoryCode) {
-      this.selectedCategory = this.categories.find(cat => cat.code === this.course.categoryCode);
+  //   if (this.course && this.course.categoryCode) {
+  //     this.selectedCategory = this.categories.find(cat => cat.code === this.course.categoryCode);
+  //     this.courseForm.get('categoryCode')?.setValue(this.selectedCategory?.code || '');
+  //   }
+  // }
+
+ ngOnInit(): void {
+  this.route.params.subscribe(params => {
+    this.courseId = params['id'];
+    if (this.courseId) {
+      this.loadInitialData();
+    } else {
+      console.error('Course ID is missing');
+    }
+  });
+
+  const navigation = this.router.getCurrentNavigation();
+  const state = navigation?.extras.state as { course: Course };
+  if (state && state.course) {
+    this.course = state.course; // Ensure course is set
+    this.courseForm.patchValue(state.course);
+    this.setSyllabus(state.course.syllabus || []);
+    this.setLecturerName(state.course.lecturerCode);
+    
+    if (state.course.categoryCode) {
+      this.selectedCategory = this.categories.find(cat => cat.code === state.course.categoryCode);
       this.courseForm.get('categoryCode')?.setValue(this.selectedCategory?.code || '');
+     
+      
     }
   }
+}
 
   loadInitialData(): void {
     forkJoin({
@@ -91,11 +119,13 @@ export class EditCourseComponent implements OnInit {
         this.learningMethods = learningMethods;
         this.course = course;
         this.lecturerCodes = lecturers;
-
+  
+        console.log('Course Data:', course);
+  
         this.courseForm.patchValue({
           courseCode: course.courseCode,
           courseName: course.courseName,
-          categoryCode: course.categoryCode,
+          categoryCode: course.categoryCode, // Ensure categoryCode is set
           numberOfLessons: course.numberOfLessons,
           startDate: this.formatDate(course.startDate),
           syllabus: course.syllabus,
@@ -103,9 +133,10 @@ export class EditCourseComponent implements OnInit {
           image: course.imagePath,
           lecturerCode: course.lecturerCode
         });
-
+  
+        // Ensure the category name is set correctly
         this.setSyllabus(course.syllabus || []);
-        this.setCategoryName(course.categoryCode);
+        this.setCategoryName(course.categoryCode); // Update category name based on course
         this.setLecturerName(course.lecturerCode);
       },
       (error) => {
@@ -113,7 +144,7 @@ export class EditCourseComponent implements OnInit {
       }
     );
   }
-
+  
   initForm(): void {
     this.courseForm = this.fb.group({
       courseCode: ['', Validators.required],
@@ -183,6 +214,16 @@ export class EditCourseComponent implements OnInit {
       this.courseForm.get('categoryName')?.setValue('');
     }
   }
+  onCategoryCodeChange(event: MatSelectChange): void {
+    const selectedCategoryCode = event.value;
+    this.selectedCategory = this.categories.find(cat => cat.code === selectedCategoryCode);
+  
+    // Set the selected category code and category name in the form
+    this.courseForm.get('categoryCode')?.setValue(selectedCategoryCode);
+    this.setCategoryName(selectedCategoryCode);
+  }
+  
+  
   get syllabus(): FormArray {
     return this.courseForm.get('syllabus') as FormArray;
   }
@@ -195,30 +236,31 @@ export class EditCourseComponent implements OnInit {
     this.syllabus.removeAt(index);
   }
    
-    onCategoryCodeChange(event: MatSelectChange): void {
-      const selectedCategoryCode = event.value;
-      this.setCategoryName(selectedCategoryCode);
-    }
+ 
+  
   onLecturerCodeChange(event: MatSelectChange): void {
     const selectedCode = event.value;
     this.setLecturerName(selectedCode);
   }
 
+  
   onSubmit(): void {
     if (this.courseForm.valid) {
       const syllabus = this.courseForm.get('syllabus')?.value.filter((field: string) => field.trim() !== '');
-
+  
       if (syllabus.length === 0) {
         Swal.fire('Error!', 'The syllabus cannot be empty.', 'error');
         return;
       }
-
+  
       const updatedCourse = {
         ...this.courseForm.value,
         syllabus: syllabus,
-        categoryCode: this.selectedCategory ? this.selectedCategory.code : '',
+        categoryCode: this.selectedCategory ? this.selectedCategory.code : this.courseForm.get('categoryCode')?.value // Ensure categoryCode is being set
       };
-
+  
+      console.log('Updated Course:', updatedCourse);
+  
       this.courseService.updateCourse(updatedCourse).subscribe({
         next: () => {
           Swal.fire({
@@ -248,7 +290,7 @@ export class EditCourseComponent implements OnInit {
       });
     }
   }
-
+  
   cancel(): void {
     this.router.navigate(['/all-courses']);
   }

@@ -15,7 +15,7 @@ export class AuthService {
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   private authenticatedSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  private apiUrl = 'http://localhost:3000'; // Address of your server
+  private apiUrl = 'http://localhost:3000'; 
   private tokenKey = 'jwtToken'; // Token key
   private currentUserSubject: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
   public currentUser$: Observable<User | null> = this.currentUserSubject.asObservable();
@@ -116,7 +116,7 @@ export class AuthService {
             text: 'Invalid username or password. Please try again.',
             confirmButtonText: 'OK'
           });
-          return of(); // מחזירה Observable ריק
+          return of();
         } else if (error.status === 404) {
           Swal.fire({
             icon: 'info',
@@ -126,7 +126,7 @@ export class AuthService {
           }).then(() => {
             this.router.navigate(['/register'], { queryParams: { username, password } });
           });
-          return of(); // מחזירה Observable ריק
+          return of(); 
         } else {
           Swal.fire({
             icon: 'error',
@@ -134,52 +134,12 @@ export class AuthService {
             text: 'Something went wrong; Please try again later.',
             confirmButtonText: 'OK'
           });
-          return of(); // מחזירה Observable ריק
+          return of(); 
         }
       })
     );
   }
-  
-  
-  // login(username: string, password: string): Observable<User> {
-  //   return this.http.post<User>(`${this.apiUrl}/login`, { username, password }).pipe(
-  //     tap(response => {
-  //       this.handleAuthentication(response);
-  //     }),
-  //     catchError(error => {
-  //       console.error('Login error', error);
-  
-  //       if (error.status === 401) {
-  //         Swal.fire({
-  //           icon: 'error',
-  //           title: 'Login error',
-  //           text: 'Invalid username or password. Please try again.',
-  //           confirmButtonText: 'OK'
-  //         });
-  //         return throwError('Invalid username or password. Please try again.');
-  //       } else if (error.status === 404) {
-  //         Swal.fire({
-  //           icon: 'info',
-  //           title: 'User not found',
-  //           text: 'Beyond registration...',
-  //           confirmButtonText: 'OK'
-  //         }).then(() => {
-  //           this.router.navigate(['/register'], { queryParams: { username,password } });
-  //         });
-  //         return throwError('User not found. Redirecting to registration.');
-  //       } else {
-  //         Swal.fire({
-  //           icon: 'error',
-  //           title: 'Error',
-  //           text: 'Something went wrong; Please try again later.',
-  //           confirmButtonText: 'OK'
-  //         });
-  //         return throwError('Something went wrong; please try again later.');
-  //       }
-  //     })
-  //   );
-  // }
-  
+
  
   private handleAuthentication(response: any): void {
     const token = response.token;
@@ -203,13 +163,12 @@ export class AuthService {
   }
 
   logout(): void {
-    // נניח שאתה שומר את ה-token ב-localStorage
-    localStorage.removeItem('token'); // או כל מידע אחר
+    sessionStorage.removeItem('token'); // או כל מידע אחר
     this.isAuthenticatedSubject.next(false); // עדכון הסטטוס
     this.currentUserSubject.next(null); // נקה את המשתמש הנוכחי
     this.authenticatedSubject.next(false); // Clear authenticated state
   }
-
+// 
 
   private hasToken(): boolean {
     return !!this.getToken();

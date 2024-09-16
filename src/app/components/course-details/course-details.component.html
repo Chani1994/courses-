@@ -1,14 +1,14 @@
 
 
 <!-- צביעת הכרטיס רק אם המשתמש מחובר והקורס מתחיל בשבוע הקרוב -->
-<div [ngClass]="{'highlighted-card': authService.isAuthenticated() && isHighlighted}" class="course-card">
+<!-- <div [ngClass]="{'highlighted-card': authService.isAuthenticated() && isHighlighted}" class="course-card">
   <div class="course-image-container">
     <img [src]="course.imagePath" alt="Course Image" class="course-image" />
   </div>
 
-  <div class="course-details-container">
+  <div class="course-details-container"> -->
     <!-- הצגת שדות הקטגוריה רק אם המשתמש מחובר -->
-   
+<!--    
     <ng-container *ngIf="authService.isAuthenticated() && category">
       <div *ngIf="category" class="course-category">
         <img *ngIf="category.iconPath" [src]="category.iconPath" alt="{{ categoryName }} icon" class="category-icon"/>
@@ -22,22 +22,49 @@
     <div class="course-details">
       <h2 class="course-name">{{ course.courseName }}</h2>
       <p><strong>Number of Lessons:</strong> {{ course.numberOfLessons }}</p>
-      <p><strong>Learning Method:</strong> {{ getLearningMethodEnum(course.learningMethod) | learningModeIcon }}</p>
+      <p><strong>Learning Method:</strong> {{ getLearningMethodEnum(course.learningMethod) | learningModeIcon }}</p> -->
 
       <!-- הצגת שדות נוספים רק למשתמשים מחוברים -->
-      <ng-container *ngIf="authService.isAuthenticated()">
+      <!-- <ng-container *ngIf="authService.isAuthenticated()">
         <p><strong>Lecturer Name:</strong> {{ lecturerName }}</p>
         <p><strong>Start Date:</strong> {{ course.startDate | date }}</p>
         <p><strong>Syllabus:</strong></p>
         <ul>
           <li *ngFor="let item of course.syllabus">{{ item }}</li>
         </ul>
-      </ng-container>
+      </ng-container> -->
             <!-- הצגת כפתור עדכון רק אם המשתמש מחובר והוא המרצה -->
 
-      <button mat-raised-button *ngIf="(authService.isAuthenticated$ | async) && (isLecturer$ | async)" (click)="editCourse()">Update Course Details</button>
+      <!-- <button mat-raised-button *ngIf="(authService.isAuthenticated$ | async) && (isLecturer$ | async)" (click)="editCourse()">Update Course Details</button>
 
     </div>
   </div>
+</div> -->
+
+<div [ngClass]="{'highlighted-card': authService.isAuthenticated() && isHighlighted}" class="course-card">
+  
+
+  <div class="course-details-container">
+    <div class="course-category" *ngIf="category">
+      <img *ngIf="category.iconPath" [src]="category.iconPath" alt="{{ categoryName }} icon" class="category-icon" loading="lazy"/>
+      <span class="category-name">{{ categoryName }}</span>
+    </div>
+
+    <div class="course-details">
+    
+      <ng-container>
+        <p><strong>Lecturer Name:</strong> {{ lecturerName }}</p>
+        <p class="start-in-a-week"><strong>Start Date:</strong> {{ course.startDate | date }}</p>
+        <p><strong>Syllabus:</strong></p>
+        <ul>
+          <li *ngFor="let item of course.syllabus">{{ item }}</li>
+        </ul>
+      </ng-container>
+
+      <!-- הצגת כפתור עדכון רק אם המשתמש מחובר והוא המרצה -->
+      <button mat-raised-button *ngIf="(authService.isAuthenticated$ | async) && (isLecturer$ | async)" (click)="editCourse()">Update Course Details</button>
+    </div>
+  </div>
 </div>
+
     

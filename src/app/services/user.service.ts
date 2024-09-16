@@ -9,12 +9,12 @@ import { catchError, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:3000/users'; // Address of your API
+  private apiUrl = 'http://localhost:3000/users'; 
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {
-    this.loadCurrentUser(); // Load current user on service initialization
+    this.loadCurrentUser(); 
   }
 
   private loadCurrentUser(): void {

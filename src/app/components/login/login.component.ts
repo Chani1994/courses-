@@ -1,16 +1,16 @@
-
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
-import Swal from 'sweetalert2';
 import { User } from '../../models/user.model';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-login',
@@ -32,6 +32,66 @@ export class LoginComponent {
 
 
 
+  // login(): void {
+  //   this.errorMessage = ''; // לנקות הודעות שגיאה קודמות
+  
+  //   this.authService.login(this.username, this.password).subscribe(
+  //     (response: any) => {
+  //       if (response && response.token) {
+  //         // שמירת הטוקן
+  //         sessionStorage.setItem('jwtToken', response.token);
+  //         this.authService.loadJwt();
+  
+  //         // שליפת פרטי המשתמש
+  //         this.userService.getUserByUsername(this.username).subscribe(
+  //           (user: User | null) => {
+  //             if (user) {
+  //               this.authService.saveCurrentUser(user);
+  //               this.userService.saveCurrentUser(user);
+  //                 Swal.fire({
+  //                 icon: 'success',
+  //                 title: 'Successfully connected!',
+  //                 text: 'Welcome!',
+  //                 confirmButtonText: 'OK'
+  //               }).then((result) => {
+  //                 if (result.isConfirmed) {
+  //                   // ניתוב לעמוד הקורסים
+  //                   this.router.navigate(['/all-courses']);
+  //                 }
+  //               });
+  //             } else {
+  //               // במקרה שאין משתמש - ניתוב לרישום
+  //               this.router.navigate(['/register'], { queryParams: { username: this.username, password: this.password } });
+  //             }
+  //           },
+  //           (error) => {
+  //             // טיפול בשגיאה בקבלת פרטי המשתמש - ניתוב לרישום
+  //             this.router.navigate(['/register'], { queryParams: { username: this.username, password: this.password } });
+  //           }
+  //         );
+  //       } else {
+  //         // במקרה ואין טוקן בהתחברות
+  //         this.errorMessage = 'Login failed: No token received.';
+  //         Swal.fire({
+  //           icon: 'error',
+  //           title: 'Error',
+  //           text: this.errorMessage,
+  //           confirmButtonText: 'OK'
+  //         });
+  //       }
+  //     },
+  //     (error) => {
+  //       // טיפול בשגיאה בהתחברות
+  //       this.errorMessage = 'Login failed: Incorrect username or password.';
+  //       Swal.fire({
+  //         icon: 'error',
+  //         title: 'Login Error',
+  //         text: this.errorMessage,
+  //         confirmButtonText: 'OK'
+  //       });
+  //     }
+  //   );
+  // }
   login(): void {
     this.errorMessage = ''; // לנקות הודעות שגיאה קודמות
   
@@ -65,39 +125,16 @@ export class LoginComponent {
                 // במקרה שאין משתמש - ניתוב לרישום
                 this.router.navigate(['/register'], { queryParams: { username: this.username, password: this.password } });
               }
-            },
-            (error) => {
-              // טיפול בשגיאה בקבלת פרטי המשתמש - ניתוב לרישום
-              this.router.navigate(['/register'], { queryParams: { username: this.username, password: this.password } });
             }
           );
-        } else {
-          // במקרה ואין טוקן בהתחברות
-          this.errorMessage = 'Login failed: No token received.';
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: this.errorMessage,
-            confirmButtonText: 'OK'
-          });
         }
-      },
-      (error) => {
-        // טיפול בשגיאה בהתחברות
-        this.errorMessage = 'Login failed: Incorrect username or password.';
-        Swal.fire({
-          icon: 'error',
-          title: 'Login Error',
-          text: this.errorMessage,
-          confirmButtonText: 'OK'
-        });
       }
     );
   }
   
 handleUserNotFound(error?: any): void {
     // console.error('משתמש לא נמצא או שגיאה בקבלת המשתמש:', error);
-    this.errorMessage = 'אירעה שגיאה במהלך קבלת פרטי המשתמש.';
+    this.errorMessage ='An error occurred while receiving user information.';
     Swal.fire('Error', this.errorMessage, 'error');
     this.router.navigate(['/register']);
 }

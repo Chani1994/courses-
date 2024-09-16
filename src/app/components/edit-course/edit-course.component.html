@@ -16,7 +16,15 @@
 
   <div class="category-row">
 
-    <mat-form-field appearance="fill">
+    <!-- <mat-form-field appearance="fill">
+      <mat-label>Category Code</mat-label>
+      <mat-select formControlName="categoryCode" (selectionChange)="onCategoryCodeChange($event)">
+        <mat-option *ngFor="let category of categories" [value]="category.code">
+          {{ category.code }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field> -->
+    <mat-form-field>
       <mat-label>Category Code</mat-label>
       <mat-select formControlName="categoryCode" (selectionChange)="onCategoryCodeChange($event)">
         <mat-option *ngFor="let category of categories" [value]="category.code">
@@ -24,7 +32,6 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    
     <mat-form-field appearance="fill">
       <mat-label>Category Name</mat-label>
       <input matInput formControlName="categoryName" readonly>
@@ -46,17 +53,6 @@
       <input matInput id="lecturerName" formControlName="lecturerName" readonly>
     </mat-form-field>
   </div>
-
-
-   
-     
-    
-      
-
-
-
-
-
 
 
   

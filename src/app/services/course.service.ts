@@ -96,14 +96,14 @@ export class CourseService {
     );
   }
 
-  // Method to get a course by its code
+  // קבלת קורס ע"פ קוד
   getCourseById(courseCode: string): Observable<Course> {
     return this.http.get<Course>(`${this.apiUrl}/${courseCode}`).pipe(
       catchError(this.handleError<Course>('getCourseById'))
     );
   }
 
-  // Method to fetch all categories from the server
+  // קבלת כל הקטגוריות
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(this.categoriesUrl).pipe(
       catchError(this.handleError<Category[]>('getCategories', []))
@@ -137,7 +137,7 @@ export class CourseService {
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(`${operation} failed: ${error.message}`);
-      return of(result as T); // Assume result is undefined if not provided
+      return of(result as T); 
     };
   }
 }

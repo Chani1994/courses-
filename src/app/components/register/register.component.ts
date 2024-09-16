@@ -42,11 +42,10 @@ export class RegisterComponent implements OnInit {
   
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      console.log('Query params:', params); // הוסף לוגים לבדיקה
+      console.log('Query params:', params); 
       this.username = params['username'] || '';
       this.password = params['password'] || '';
 
-      // this.courseName = params['courseName'] || '';
       this.isLecturerRegistration = params['isLecturer'] === 'true';
       this.generateUserCode(); // יצירת קוד אוטומטי
     });
@@ -150,7 +149,7 @@ performLogin(): void {
     },
     loginError => {
       console.error('Error logging in:', loginError);
-      this.errorMessage = 'אירעה שגיאה במהלך ההתחברות.';
+      this.errorMessage = 'An error occurred during login.';
       Swal.fire('Error', this.errorMessage, 'error');
     }
   );

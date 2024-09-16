@@ -9,8 +9,7 @@ import { Course } from '../models/course.model';
   providedIn: 'root'
 })
 export class CategoryService {
-  private apiUrl = 'http://localhost:3000/categories'; // URL ל-API של הקטגוריות
-
+  private apiUrl = 'http://localhost:3000/categories';
   constructor(private http: HttpClient) {}
 
   // קבלת כל הקטגוריות

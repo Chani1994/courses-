@@ -32,6 +32,7 @@ import { CategoryService } from '../../services/category.service';
 })
 export class CourseDetailsComponent implements OnInit {
   course$: Observable<Course[]> | undefined;
+  courses: Course[] | undefined;
 
   isLecturer$: Observable<boolean> = new Observable<boolean>(); // Observable עבור מצב המרצה
   currentUser$: Observable<User | null> = this.userService.getCurrentUser();
@@ -41,7 +42,6 @@ export class CourseDetailsComponent implements OnInit {
   categoryName:string='';
   category: Category | null=null; // נוסיף משתנה לאחסון הקטגוריה
   @Input() course!: Course;
-  courses: Course[] | undefined;
 
   constructor(
     public authService: AuthService,

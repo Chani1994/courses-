@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { CourseService } from '../../services/course.service';
 import { CategoryService } from '../../services/category.service';
 import { CommonModule } from '@angular/common';
-import Swal from 'sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LecturerService } from '../../services/lecturer.service';
 import { Lecturer } from '../../models/lecturer.model';
@@ -18,6 +17,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-add-course',

@@ -31,10 +31,29 @@
     </div>
   </div>
   
-  <div class="course-list">
+
+  <div *ngFor="let course of filteredCourses" class="course-card">
+    <div class="course-image-container">
+      <img [src]="course.imagePath" alt="Course Image" class="course-image" loading="lazy">
+    </div>
+    <div class="course-details-container">
+      <h2>{{ course.courseName }}</h2>
+      <div class="course-details">
+        <p><strong>Learning Method:</strong> {{ getLearningMethodEnum(course.learningMethod) | learningModeIcon }}</p>
+        <p><strong>Number of Lessons:</strong> {{ course.numberOfLessons }}</p>
+      </div>
+        <!-- הצגת קומפוננטת פרטי הקורס אם המשתמש מחובר -->
+    <ng-container *ngIf="authService.isAuthenticated()">
+      <app-course-details [course]="course"></app-course-details>
+    </ng-container>
+    </div>
+  </div> 
+  
+
+   <!-- <div class="course-list">
     <div *ngFor="let course of filteredCourses" class="course-tile">
       <app-course-details [course]="course"></app-course-details>
 
     </div>
-  </div>
-
+  </div>  -->
+ 

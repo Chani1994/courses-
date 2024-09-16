@@ -18,7 +18,7 @@ export class NavbarComponent implements OnInit {
   firstLetter$: Observable<string | null>;
   isAuthenticated$: Observable<boolean>;
   username$: Observable<string | null>;
-  currentUser: User | null = null; // הוסף את המאפיין הזה
+  currentUser: User | null = null;
   private subscriptions: Subscription = new Subscription();
   constructor(private router: Router, public authService: AuthService,    private cdr: ChangeDetectorRef
     ) {
