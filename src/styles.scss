@@ -1,13 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, 'Arial', sans-serif; }
 .style-title{
-    color: #e91e63; /* צבע הכותרת */
+    color: #e91e63; 
     font-family: 'Arial', sans-serif !important;
    font-weight: bold !important;
    text-align: center ;
     font-size: 25px !important;
-    margin: 0; /* מבטל רווחים סביב הכותרת */
-    padding: 10px; /* רווח פנימי סביב הכותרת, אם נדרש */
+    margin: 0; 
+    padding: 10px; 
   }
+  .error {
+    color: red;
+    margin-top: 10px;
+  }
+  

@@ -168,7 +168,7 @@ export class AuthService {
     this.currentUserSubject.next(null); // נקה את המשתמש הנוכחי
     this.authenticatedSubject.next(false); // Clear authenticated state
   }
-// 
+
 
   private hasToken(): boolean {
     return !!this.getToken();

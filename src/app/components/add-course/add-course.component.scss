@@ -31,14 +31,11 @@
   box-sizing: border-box;
 }
 
-.error {
-  color: red;
-  margin-top: 10px;
-}
+
 
 /* עיצוב למסכים קטנים */
 @media (max-width: 600px) {
-  .form-row, .lecturer-row, .learning-mode-row {
+  .form-row, .lecturer-row, .learning-mode-row, .categoty-row {
     flex-direction: column; /* כל השדות יהיו אחד מתחת לשני */
     align-items: stretch; /* השדות יתפסו את כל הרוחב הזמין */
   }

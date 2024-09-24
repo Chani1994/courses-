@@ -14,7 +14,6 @@ import { User } from '../../models/user.model';
 })
 export class NavbarComponent implements OnInit {
   isMenuOpen = false;
-
   firstLetter$: Observable<string | null>;
   isAuthenticated$: Observable<boolean>;
   username$: Observable<string | null>;

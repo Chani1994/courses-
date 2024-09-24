@@ -32,66 +32,6 @@ export class LoginComponent {
 
 
 
-  // login(): void {
-  //   this.errorMessage = ''; // לנקות הודעות שגיאה קודמות
-  
-  //   this.authService.login(this.username, this.password).subscribe(
-  //     (response: any) => {
-  //       if (response && response.token) {
-  //         // שמירת הטוקן
-  //         sessionStorage.setItem('jwtToken', response.token);
-  //         this.authService.loadJwt();
-  
-  //         // שליפת פרטי המשתמש
-  //         this.userService.getUserByUsername(this.username).subscribe(
-  //           (user: User | null) => {
-  //             if (user) {
-  //               this.authService.saveCurrentUser(user);
-  //               this.userService.saveCurrentUser(user);
-  //                 Swal.fire({
-  //                 icon: 'success',
-  //                 title: 'Successfully connected!',
-  //                 text: 'Welcome!',
-  //                 confirmButtonText: 'OK'
-  //               }).then((result) => {
-  //                 if (result.isConfirmed) {
-  //                   // ניתוב לעמוד הקורסים
-  //                   this.router.navigate(['/all-courses']);
-  //                 }
-  //               });
-  //             } else {
-  //               // במקרה שאין משתמש - ניתוב לרישום
-  //               this.router.navigate(['/register'], { queryParams: { username: this.username, password: this.password } });
-  //             }
-  //           },
-  //           (error) => {
-  //             // טיפול בשגיאה בקבלת פרטי המשתמש - ניתוב לרישום
-  //             this.router.navigate(['/register'], { queryParams: { username: this.username, password: this.password } });
-  //           }
-  //         );
-  //       } else {
-  //         // במקרה ואין טוקן בהתחברות
-  //         this.errorMessage = 'Login failed: No token received.';
-  //         Swal.fire({
-  //           icon: 'error',
-  //           title: 'Error',
-  //           text: this.errorMessage,
-  //           confirmButtonText: 'OK'
-  //         });
-  //       }
-  //     },
-  //     (error) => {
-  //       // טיפול בשגיאה בהתחברות
-  //       this.errorMessage = 'Login failed: Incorrect username or password.';
-  //       Swal.fire({
-  //         icon: 'error',
-  //         title: 'Login Error',
-  //         text: this.errorMessage,
-  //         confirmButtonText: 'OK'
-  //       });
-  //     }
-  //   );
-  // }
   login(): void {
     this.errorMessage = ''; // לנקות הודעות שגיאה קודמות
   

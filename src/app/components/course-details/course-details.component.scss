@@ -1,36 +1,3 @@
-// /* עיצוב כרטיס הקורס */
-// .course-card {
-//   display: flex;
-//   align-items: flex-start;
-//   border: 1px solid #ddd;
-//   border-radius: 8px;
-//   padding: 16px;
-//   margin-bottom: 16px;
-//   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-//   background-color: #fff;
-//   color: #444343;
-//   height: 300px; /* גובה קבוע לכרטיס */
-//   overflow: hidden; /* מונע גלילה פנימית */
-//   position: relative; /* להנחת התמונה עם פוזיציה אבסולוטית */
-// }
-
-// /* קונטיינר התמונה */
-// .course-image-container {
-//   flex: 0 0 150px; /* גודל קבוע לתמונה */
-//   margin-right: 24px; /* רווח מוגדל בין התמונה לפרטי הקורס */
-//   margin-left: 5px;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// }
-
-// /* עיצוב התמונה */
-// .course-image {
-//   width: 100%; /* מתאימה למיכל */
-//   height: auto; /* שומרת על פרופורציות */
-//   object-fit: cover; /* התמונה תכסה את כל השטח המוקצה לה */
-//   border-radius: 8px;
-// }
 
 /* קונטיינר פרטי הקורס */
 .course-details-container {
@@ -204,40 +171,7 @@
 //   border: 2px solid #e91e63; /* מסגרת צבעונית */
 // }
 
-// /* סטיילינג למצב רספונסיבי */
-// @media (max-width: 1200px) {
-//   .course-details-container {
-//     max-width: 100%; /* הכרטיס יתפוס את כל הרוחב במסכים בינוניים */
-//   }
-// }
 
-// @media (max-width: 600px) {
-//   .course-details-container {
-//     max-width: 100%; /* הכרטיס יתפוס את כל הרוחב במסכים קטנים */
-//   }
-
-//   .course-image-container {
-//     flex: 0 0 150px; /* גודל התמונה במסכים קטנים */
-//   }
-
-//   .course-details h2 {
-//     font-size: 18px; /* גודל כותרת קטן יותר למסכים קטנים */
-//   }
-
-//   .course-details p {
-//     font-size: 16px; /* גודל טקסט קטן יותר למסכים קטנים */
-//   }
-  
-  
-// }
-
-
-
-// .course-card {
-//   display: flex;
-//   align-items: flex-start;
- 
-// }
 
 // .course-image-container {
 //   flex: 0 0 150px; /* נשאר באותו גודל לקונטיינר */
@@ -369,3 +303,37 @@
 //   background-color: #fbeef4;
 // }
 
+// /* סטיילינג למצב רספונסיבי */
+// @media (max-width: 1200px) {
+//   .course-details-container {
+//     max-width: 100%; /* הכרטיס יתפוס את כל הרוחב במסכים בינוניים */
+//   }
+// }
+
+// @media (max-width: 600px) {
+//   .course-details-container {
+//     max-width: 100%; /* הכרטיס יתפוס את כל הרוחב במסכים קטנים */
+//   }
+
+//   .course-image-container {
+//     flex: 0 0 150px; /* גודל התמונה במסכים קטנים */
+//   }
+
+//   .course-details h2 {
+//     font-size: 18px; /* גודל כותרת קטן יותר למסכים קטנים */
+//   }
+
+//   .course-details p {
+//     font-size: 16px; /* גודל טקסט קטן יותר למסכים קטנים */
+//   }
+  
+  
+// }
+
+
+
+// .course-card {
+//   display: flex;
+//   align-items: flex-start;
+ 
+// }

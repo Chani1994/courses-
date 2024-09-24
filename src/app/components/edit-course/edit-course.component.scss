@@ -1,4 +1,4 @@
-.add-course-container, .edit-container {
+.edit-container {
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
@@ -31,19 +31,15 @@
   width: auto; /* מותאם לפי גודל השדה */
 }
 
-.error {
-  color: red;
-  margin-top: 10px;
-}
 
 /* עיצוב רספונסיבי למסכים קטנים */
 @media (max-width: 600px) {
-  .add-course-container, .edit-container {
+  .edit-container {
     padding: 10px; /* התאמת רווח פנימי למסכים קטנים */
     max-width: 100%; /* גורם לטופס לתפוס את כל רוחב המסך */
   }
 
-  .form-row, .lecturer-row, .learning-mode-row {
+  .form-row, .lecturer-row, .learning-mode-row, .categoty-row {
     flex-direction: column; /* השדות יסודרו אחד מתחת לשני */
     align-items: stretch; /* כל שדה יתפוס את כל הרוחב */
   }

@@ -14,7 +14,7 @@
   import { MatSelectChange, MatSelectModule } from '@angular/material/select';
   import { MatGridListModule } from '@angular/material/grid-list';
   import { MatButtonModule } from '@angular/material/button';
-import { LearningModeIconPipe } from "../../pipes/learning-mode-icon.pipe";
+  import { LearningModeIconPipe } from "../../pipes/learning-mode-icon.pipe";
   
   @Component({
     selector: 'app-all-courses',
@@ -137,9 +137,6 @@ import { LearningModeIconPipe } from "../../pipes/learning-mode-icon.pipe";
       }
       return LearningMethod['In-Person']; // ערך ברירת מחדל במידה ואין התאמה
     }
-    // goToLogin() {
-    //   this.router.navigate(['/login']);
-    // }
   }
   
 

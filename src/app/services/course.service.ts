@@ -11,55 +11,6 @@ export class CourseService {
   private apiUrl = 'http://localhost:3000/courses'; // API URL for courses
   private categoriesUrl = 'http://localhost:3000/categories'; // API URL for categories
 
-  // קורסי ברירת מחדל לפי קטגוריות
-//   private defaultCourses: Course[] = [
-//     { 
-//         category: { code: '001', name: 'Teaching', iconPath: 'assets/images/teach-1968076_1280.jpg' }, 
-//         courseCode: 'DEF001', 
-//         courseName: 'English Course', 
-//         numberOfLessons: 10, 
-//         startDate: new Date('2024-09-25'), 
-//         syllabus: ['Introduction to Teaching'], 
-//         learningMethod: LearningMethod.Zoom,
-//         lecturerCode: 'USR-4662', 
-//         imagePath: 'assets/images/english-british-england-language-education-concept.jpg' 
-//     },
-//     { 
-//         category: { code: '002', name: 'Creation and Art', iconPath: 'assets/images/hand-4752642_1280.jpg' }, 
-//         courseCode: 'DEF002', 
-//         courseName: 'Sewing for Beginners', 
-//         numberOfLessons: 5, 
-//         startDate: new Date('2024-09-15'), 
-//         syllabus: ['Sewing Basics'], 
-//         learningMethod: LearningMethod["In-Person"], 
-//         lecturerCode: 'USR-8948', 
-//         imagePath: 'assets/images/top-view-variety-fabrics-with-thread-scissors.jpg' 
-//     },
-//     { 
-//         category: { code: '003', name: 'Computers', iconPath: 'assets/images/pexels-pixabay-38568.jpg' }, 
-//         courseCode: 'DEF003', 
-//         courseName: 'Architecture Course', 
-//         numberOfLessons: 12, 
-//         startDate: new Date('2024-10-30'), 
-//         syllabus: ['Introduction to Architecture'], 
-//         learningMethod: LearningMethod.Zoom, 
-//         lecturerCode: 'USR-7609', 
-//         imagePath: 'assets/images/high-angle-architectural-objects-desk.jpg' 
-//     },
-//     { 
-//         category: { code: '004', name: 'Medicine', iconPath: 'assets/images/syringes-3539565_1280.jpg' }, 
-//         courseCode: 'DEF004', 
-//         courseName: 'Medical Secretarial Studies', 
-//         numberOfLessons: 8, 
-//         startDate: new Date('2024-09-30'), 
-//         syllabus: ['Basics of Medicine'], 
-//         learningMethod: LearningMethod["In-Person"], 
-//         lecturerCode: 'USR-445', 
-//         imagePath: 'assets/images/cold-1972619_1280.jpg' 
-//     },
-// ];
-
-
   constructor(private http: HttpClient) {}
 
 
@@ -103,14 +54,7 @@ export class CourseService {
     );
   }
 
-  // קבלת כל הקטגוריות
-  getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.categoriesUrl).pipe(
-      catchError(this.handleError<Category[]>('getCategories', []))
-    );
-  }
 
-  
   // Method to initialize courses by posting them to the server
   initializeCourses(courses: Course[]): Observable<void[]> {
     // Validate all course fields before sending them

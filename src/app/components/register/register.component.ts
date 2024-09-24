@@ -6,11 +6,12 @@ import { LecturerService } from '../../services/lecturer.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { User } from '../../models/user.model';
-import Swal from 'sweetalert2';
 import { AuthService } from '../../services/auth.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-register',

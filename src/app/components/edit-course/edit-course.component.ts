@@ -56,30 +56,6 @@ export class EditCourseComponent implements OnInit {
     this.setMinDate();
   }
 
-  // ngOnInit(): void {
-  //   this.route.params.subscribe(params => {
-  //     this.courseId = params['id'];
-  //     if (this.courseId) {
-  //       this.loadInitialData();
-  //     } else {
-  //       console.error('Course ID is missing');
-  //     }
-  //   });
-  
-  //   const navigation = this.router.getCurrentNavigation();
-  //   const state = navigation?.extras.state as { course: Course };
-  //   if (state && state.course) {
-  //     this.courseForm.patchValue(state.course);
-  //     this.setSyllabus(state.course.syllabus || []);
-  //     this.setLecturerName(state.course.lecturerCode);
-  //   }
-
-  //   if (this.course && this.course.categoryCode) {
-  //     this.selectedCategory = this.categories.find(cat => cat.code === this.course.categoryCode);
-  //     this.courseForm.get('categoryCode')?.setValue(this.selectedCategory?.code || '');
-  //   }
-  // }
-
  ngOnInit(): void {
   this.route.params.subscribe(params => {
     this.courseId = params['id'];
